@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   helper_mlx.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/01 15:11:11 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/01 16:08:42 by sgavrilo         ###   ########.fr       */
+/*   Created: 2026/03/01 16:32:59 by sgavrilo          #+#    #+#             */
+/*   Updated: 2026/03/01 16:58:33 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "cub3d.h"
 
-// Standard Libraries
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <math.h>
-# include <sys/time.h>
+int	my_mlx_pixel_put(t_img *img, int x, int y, int color)
+{
+	char	*dst;
 
-// Modules
-# include "../minilibx-linux/mlx.h"
-# include "defines.h"
-# include "parse.h"
-# include "execute.h"
-
-#endif
+	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
+		return (FAILURE);
+	dst = img->addr + (y * img->line_len + x (img->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
