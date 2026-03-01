@@ -104,7 +104,10 @@ typedef struct s_color
 
 typedef struct s_config
 {
-    char	*texture_path[4];
+    char  *no_path;
+    char  *so_path;
+    char  *we_path;
+    char  *ea_path;
     t_color	floor_color;
     t_color	ceiling_color;
 }				t_config;
