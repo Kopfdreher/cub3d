@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:59:04 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/01 16:02:51 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/01 17:24:26 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int		parse_cub_file(char *filepath, t_game *game);
 
 // Validation
 int		check_file_extension(char *filepath);
-int		validate_map_walls(t_data *dat);
 int		extract_colors(char *line, t_data *data);
 int		extract_textures(char *line, t_data *data);
+int		validate_map_walls(t_data *dat);
 
 // Memory Management
 void	free_map(char **map);

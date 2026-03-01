@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/01 16:31:35 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/01 17:40:09 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@
 // ENUMS -----------------------------------------------------------------------
 
 typedef enum e_direction {
-	NORTH,
-	SOUTH,
-	WEST,
-	EAST
+	NORTH, // 0
+	SOUTH, // 1
+	WEST, // 2
+	EAST // 3
 }	t_direction;
 
 // STRUCTS ---------------------------------------------------------------------
@@ -48,14 +48,20 @@ typedef struct s_keys {
 	int	right;
 } t_keys;
 
-typedef struct s_data {
-	char	**map;
-	int		map_width;
-	int		map_height;
-	int		floor_color;
-	int		ceiling_color;
-	char	*tex_paths[4]; // NORTH, SOUTH, WEST, EAST
-} t_data;
+typedef struct s_config {
+	char		*file_path;
+	char		**map;
+	char		*NO_texture_path;
+	char		*SO_texture_path;
+	char		*WE_texture_path;
+	char		*EA_texture_path;
+	char		*floor_str;
+	char		*ceiling_str;
+	int			map_width;
+	int			map_height;
+	int			floor_color;
+	int			ceiling_color;
+} t_config;
 
 typedef struct s_player {
 	double	pos_x;
@@ -64,6 +70,7 @@ typedef struct s_player {
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
+	char	player_char;
 } t_player;
 
 typedef struct s_img {
@@ -82,7 +89,7 @@ typedef struct s_graphics {
 } t_graphics;
 
 typedef struct s_game {
-	t_data		data;
+	t_config	config;
 	t_player	player;
 	t_graphics	gfx;
 	t_keys		keys;
