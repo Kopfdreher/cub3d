@@ -94,9 +94,12 @@ typedef struct s_holder
 
 typedef struct s_color
 {
-    int		r;
-    int		g;
-    int		b;
+    int	rgb;
+    union {
+        unsigned char   r;
+        unsigned char   g;
+        unsigned char   b;
+    };
 }				t_color;
 
 typedef struct s_config
@@ -110,6 +113,12 @@ typedef struct s_parser
 {
     char	*file_path;
     t_config	config;
+    char    *floor_red;
+    char    *floor_green;
+    char    *floor_blue;
+    char    *ceilling_red;
+    char    *ceilling_green;
+    char    *ceilling_blue;
 }				t_parser;   
 
 typedef struct s_input
