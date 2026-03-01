@@ -20,12 +20,12 @@ INCS		= $(addprefix $(INC_DIR)/, $(INC_FILES))
 
 # Source files
 ERROR_FILES	=
-PARSE_FILES	=
+PARSE_FILES	= parse_init.c
 EXEC_FILES	=
 HELPER_FILES= helper_mlx
 SRC_FILES	= $(addsuffix .c, main\
 			  $(ERROR_FILES)\
-			  $(PARSE_FILES)\
+			  $(PARSE_FILES)\ 
 			  $(EXEC_FILES)\
 			  $(HELPER_FILES))
 SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
