@@ -19,6 +19,8 @@ The aim of this project is to create a 3D first person representation of a maze 
 peers
 
 links
+https://dev.to/therealowenrees/utilising-bitwise-operators-in-javascript-by-building-a-rgb-to-hex-colour-convertor-24ai
+
 https://hackmd.io/@nszl/H1LXByIE2#:~:text=The%20map%20must%20be%20composed,Ignore%20all%20leading%20whitespaces.
 
 https://lodev.org/cgtutor/raycasting.html

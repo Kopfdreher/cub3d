@@ -16,6 +16,7 @@
 # include "defines.h"
 
 int		parse_cub_file(char *filepath, t_game *game);
+int convert_color_str_to_int(t_config *config);
 char	**ft_lst_to_strarr_width(t_list **lst, int width);
 
 //free

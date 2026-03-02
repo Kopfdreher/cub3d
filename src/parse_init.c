@@ -265,6 +265,7 @@ int open_cub(t_config *config)
     return (1);
 }
 
+
 int		parse_cub_file(char *filepath, t_game *game)
 {
     int i;
@@ -290,5 +291,7 @@ int		parse_cub_file(char *filepath, t_game *game)
         printf("Error: Invalid map\n");
         return (FAILURE);
     }
+    if (convert_color_str_to_int(&game->config) == FAILURE)
+        return (FAILURE);
     return (SUCCESS);
 }
