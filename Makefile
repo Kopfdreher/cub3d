@@ -20,12 +20,12 @@ INCS		= $(addprefix $(INC_DIR)/, $(INC_FILES))
 
 # Source files
 ERROR_FILES	=
-PARSE_FILES	= parse_init.c
+PARSE_FILES	= parse_init ft_lst_to_starr_width free_game
 EXEC_FILES	=
 HELPER_FILES= helper_mlx
 SRC_FILES	= $(addsuffix .c, main\
 			  $(ERROR_FILES)\
-			  $(PARSE_FILES)\ 
+			  $(PARSE_FILES)\
 			  $(EXEC_FILES)\
 			  $(HELPER_FILES))
 SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_FILES))

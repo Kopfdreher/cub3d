@@ -16,12 +16,17 @@
 # include "defines.h"
 
 int		parse_cub_file(char *filepath, t_game *game);
+char	**ft_lst_to_strarr_width(t_list **lst, int width);
+
+//free
+int free_parse(t_config *config);
+
 
 // Validation
 int		check_file_extension(char *filepath);
-int		extract_colors(char *line, t_data *data);
-int		extract_textures(char *line, t_data *data);
-int		validate_map_walls(t_data *dat);
+int		extract_colors(char *line, t_game *game);
+int		extract_textures(char *line, t_game *game);
+int		validate_map_walls(t_game *game);
 
 // Memory Management
 void	free_map(char **map);

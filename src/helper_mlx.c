@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int	my_mlx_pixel_put(t_img *img, int x, int y, int color)
+/*int	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
@@ -20,4 +20,4 @@ int	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 		return (FAILURE);
 	dst = img->addr + (y * img->line_len + x (img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
-}
+}*/

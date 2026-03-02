@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+/*#include "cub3d.h"
 
 static void	set_a_b_to_c(t_list **a, t_list **b, t_list **c)
 {
@@ -46,3 +46,4 @@ char	**get_map_content(int map_fd)
 	}
 	return (ft_lst_to_strarr(&head));
 }
+*/

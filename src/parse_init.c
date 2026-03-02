@@ -1,32 +1,5 @@
 #include "cub3d.h"
 
-int		parse_cub_file(char *argv[1], t_game *game)
-{
-    int i;
-
-    game->config.file_path = argv[1];
-    i = open_cub(&game->config);
-    if (i != 0)
-        return (1);
-    if (game->config.NO_texture_path == NULL || game->config.SO_texture_path == NULL || game->config.WE_texture_path == NULL || game->config.EA_texture_path == NULL || game->config.floor_str == NULL || game->config.ceiling_str == NULL)
-    {
-        printf("Error: Missing texture path or color in config file\n");
-        return (1);
-    }
-    //by this point we have successfully parsed the config file and stored all the texture paths and colors in the config struct
-    //now check validity of map
-    if (game->config.map == NULL)
-    {
-        printf("Error: Missing map in config file\n");
-        return (1);
-    }
-    if (valid_map(&game->config, &game->player) == 1)
-    {
-        printf("Error: Invalid map\n");
-        return (1);
-    }
-}
-
 static int	check_surrounding_spaces(t_config *config, int i, int j);
 
 //copilot broke this out so that I dont have reapeat code
@@ -110,22 +83,22 @@ int valid_map(t_config *config, t_player *player)
 
 static int	check_surrounding_spaces(t_config *config, int i, int j)
 {
-    if ((config->map[i][j - 1] != ' ') ) //one behind
+    if ((config->map[i][j - 1] == ' ') ) //one behind
         return (1);
-    if (config->map[i][j + 1] != ' ') //one in front
+    if (config->map[i][j + 1] == ' ') //one in front
         return (1);
-    if (config->map[i - 1][j] != ' ') //one above
+    if (config->map[i - 1][j] == ' ') //one above
         return (1);
-    if (config->map[i + 1][j] != ' ') //one below
+    if (config->map[i + 1][j] == ' ') //one below
         return (1);
     //check the corners
-    if (config->map[i - 1][j - 1] != ' ') //top left corner
+    if (config->map[i - 1][j - 1] == ' ') //top left corner
         return (1);
-    if (config->map[i - 1][j + 1] != ' ') //top right corner
+    if (config->map[i - 1][j + 1] == ' ') //top right corner
         return (1);
-    if (config->map[i + 1][j - 1] != ' ') //bottom left corner
+    if (config->map[i + 1][j - 1] == ' ') //bottom left corner
         return (1);
-    if (config->map[i + 1][j + 1] != ' ') //bottom right corner
+    if (config->map[i + 1][j + 1] == ' ') //bottom right corner
         return (1);
     return (0);
 }
@@ -256,7 +229,6 @@ int open_cub(t_config *config)
     char *line;
     int i;
 
-    i = 0;
     if (!config->file_path)
     {
         printf("Error: No map file path provided\n");
@@ -271,32 +243,52 @@ int open_cub(t_config *config)
     while ((line = get_next_line(fd)) != NULL)
     {
         i = 0;
-        while (line[i] == ' ')
-        {
+        while (line[i] == ' ' || line[i] == '\t')
             i++;
-            if (line[i] == '\0' /*&& map array isnt empty return - if it isnt empty store this in the map and then return for next line*/)
-                break; //empty line, so we can ignore and move on to parsing next thing
-            if (line[i] == '1' || line[i] == '0') //we have reached the map, so we can stop parsing the config and move on to parsing the map. We also want to make sure that we actually have a map to parse and that we dont just have a line with spaces and then end of line, because that would mean we have no map
-            {
-                config->map = get_map_content(fd, line, &config);
-                if (!config->map)
-                {
-                    close(fd);
-                    return (1);
-                }
-                close(fd);
-                return (0);
-            }
-            else if (parse_cub(line, config) == 1)
-            {
-                //do I also need to free the config struct 
-                free(line);
-                close(fd);
-                return (1);
-            }
+        if (line[i] == '\n' || line[i] == '\0')
+        {
+            free(line);
+            continue;
         }
+        if (line[i] == '1' || line[i] == '0')
+        {
+            config->map = get_map_content(fd, line, config);
+            if (!config->map)
+                return (close(fd), 1);
+            return (close(fd), 0);
+        }
+        if (parse_cub(line, config) == 1)
+            return (free(line), close(fd), 1);
         free(line);
     }
     close(fd);
     return (1);
+}
+
+int		parse_cub_file(char *filepath, t_game *game)
+{
+    int i;
+
+    game->config.file_path = filepath;
+    i = open_cub(&game->config);
+    if (i != 0)
+        return (FAILURE);
+    if (game->config.NO_texture_path == NULL || game->config.SO_texture_path == NULL || game->config.WE_texture_path == NULL || game->config.EA_texture_path == NULL || game->config.floor_str == NULL || game->config.ceiling_str == NULL)
+    {
+        printf("Error: Missing texture path or color in config file\n");
+        return (FAILURE);
+    }
+    //by this point we have successfully parsed the config file and stored all the texture paths and colors in the config struct
+    //now check validity of map
+    if (game->config.map == NULL)
+    {
+        printf("Error: Missing map in config file\n");
+        return (FAILURE);
+    }
+    if (valid_map(&game->config, &game->player) == 1)
+    {
+        printf("Error: Invalid map\n");
+        return (FAILURE);
+    }
+    return (SUCCESS);
 }
