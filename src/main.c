@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 16:08:56 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 15:54:37 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:03:08 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	init_hooks(t_game *game)
 	mlx_hook(game->gfx.win, 2, 1L << 0, key_press_handler, game);
 	mlx_hook(game->gfx.win, 3, 1L << 0, key_release_handler, game);
 	mlx_hook(game->gfx.win, 17, 0, close_window_handler, game);
-	mlx_loop_hook(game->gfx.mlx, render_next_frame, game);
 }
 */
 
@@ -59,9 +58,11 @@ int	main(int argc, char **argv)
 	print_config_debug(&game);
 	if (init_session(&game) == FAILURE)
 		return (free_parse(&game.config), FAILURE);
-	/*
-	init_hooks(*game);
+
+	mlx_hook(game.gfx.win, 2, 1L << 0, key_press_handler, &game);
+	mlx_hook(game.gfx.win, 17, 0, close_window_handler, &game);
+	mlx_loop_hook(game.gfx.mlx, render_next_frame, &game);
+	// init_hooks(*game);
 	mlx_loop(game.gfx.mlx);
-	*/
 	return (free_parse(&game.config), SUCCESS);
 }

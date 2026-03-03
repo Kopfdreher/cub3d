@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 14:19:31 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:27:41 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@
 # define SCREEN_WIDTH 1024
 # define SCREEN_HEIGHT 768
 # define TEXTURE_SIZE 64
+
+# define K_W 119
+# define K_A 97
+# define K_S 115
+# define K_D 100
+# define K_LEFT 65361
+# define K_RIGHT 65363
+# define K_ESC 65307
 
 // ENUMS -----------------------------------------------------------------------
 

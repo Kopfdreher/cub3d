@@ -21,7 +21,7 @@ INCS		= $(addprefix $(INC_DIR)/, $(INC_FILES))
 # Source files
 ERROR_FILES	=
 PARSE_FILES	= parse_init ft_lst_to_starr_width parse_color
-EXEC_FILES	= init_session
+EXEC_FILES	= init_session render_next_frame key_press_handler close_window_handler
 HELPER_FILES= helper_mlx
 CLEAN_FILES	= free_game
 SRC_FILES	= $(addsuffix .c, main\
