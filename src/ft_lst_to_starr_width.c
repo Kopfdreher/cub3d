@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 14:51:18 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/03 15:11:32 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:47:44 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ char	**insert_content(t_list **lst, char **strarr, int width, int i)
 	return (strarr);
 }
 
+/*Allocates and pads strings to width
+Stops at newline when encountered
+Frees list nodes and handles errors properly
+Cleans up on failure cases*/
 char	**ft_lst_to_strarr_width(t_list **lst, int width)
 {
 	//copilot filled this in but I fully understand it

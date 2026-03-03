@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_mlx.c                                         :+:      :+:    :+:   */
+/*   init_session.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:56:12 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 14:25:24 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:57:32 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	init_session(t_game *game)
 		mlx_new_window(game->gfx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3d");
 	if (!game->gfx.win)
 	{
-		mlx_destroy_display(game->gfx.mlx); // do I need destroy display here?
+		mlx_destroy_display(game->gfx.mlx);
 		free(game->gfx.mlx);
 		return (FAILURE);
 	}
 	game->gfx.buff.img =
-		mlx_new_image(game->gfx.buff.img, SCREEN_WIDTH, SCREEN_HEIGHT);
+		mlx_new_image(game->gfx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->gfx.buff.addr =
 		mlx_get_data_addr(game->gfx.buff.img, &game->gfx.buff.bpp,
 			&game->gfx.buff.line_len, &game->gfx.buff.endian);
