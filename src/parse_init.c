@@ -8,15 +8,15 @@ static int	set_config_path(char **target, char *line, int start_idx, char *label
     if (*target != NULL)
     {
         printf("Error: Duplicate %s texture path\n", label);
-        return (1);
+        return (FAILURE);
     }
     *target = ft_strdup(line + start_idx);
     if (*target == NULL)
     {
         printf("Error: Could not allocate memory for %s texture path\n", label);
-        return (1);
+        return (FAILURE);
     }
-    return (0);
+    return (SUCCESS);
 }
 
 //Ignore all leading whitespaces.
@@ -35,18 +35,18 @@ int valid_map(t_config *config, t_player *player)
     i = 0;
 
     if (config->map_height < 3 || config->map_width < 3)
-        return (1);
+        return (FAILURE);
     while (i < config->map_height) // first check to make sure all characters are valid and only have 1 player character
     {
         j = 0;
         while (j < config->map_width)
         {
             if (config->map[i][j] != '1' && config->map[i][j] != '0' && config->map[i][j] != ' ' && config->map[i][j] != '\0' && config->map[i][j] != 'N' && config->map[i][j] != 'S' && config->map[i][j] != 'E' && config->map[i][j] != 'W')
-                return (1);
+                return (FAILURE);
             if (config->map[i][j] == 'N' || config->map[i][j] == 'S' || config->map[i][j] == 'E' || config->map[i][j] == 'W') //Im keeping the symbol in place so we know it for later
             {
                 if (player->player_char != '\0')
-                    return (1);
+                    return (FAILURE);
                 player->player_char = config->map[i][j];
             }
             j++;
@@ -54,7 +54,7 @@ int valid_map(t_config *config, t_player *player)
         i++;
     }
     if (player->player_char == '\0')
-        return (1);
+        return (FAILURE);
     i = 0;
     while (i < config->map_height) // then check to make sure the map is valid
     {
@@ -67,40 +67,40 @@ int valid_map(t_config *config, t_player *player)
                 break ;
             if ((i == 0 || i == config->map_height - 1)
                 && config->map[i][j] != '1' && config->map[i][j] != ' ')
-                return (1);
+                return (FAILURE);
             if ((j == 0 || j == config->map_width - 1) && config->map[i][j] != '1' && config->map[i][j] != ' ')
-                return (1);
+                return (FAILURE);
             if (config->map[i][j] == '0' || config->map[i][j] == 'N' || config->map[i][j] == 'S' || config->map[i][j] == 'E' || config->map[i][j] == 'W')
             {
-                if (check_surrounding_spaces(config, i, j) == 1)
-                    return (1);
+                if (check_surrounding_spaces(config, i, j) == FAILURE)
+                    return (FAILURE);
             }
             j++;
         }        i++;
     }
-    return (0);
+    return (SUCCESS);
 }
 
 static int	check_surrounding_spaces(t_config *config, int i, int j)
 {
     if ((config->map[i][j - 1] == ' ') ) //one behind
-        return (1);
+        return (FAILURE);
     if (config->map[i][j + 1] == ' ') //one in front
-        return (1);
+        return (FAILURE);
     if (config->map[i - 1][j] == ' ') //one above
-        return (1);
+        return (FAILURE);
     if (config->map[i + 1][j] == ' ') //one below
-        return (1);
+        return (FAILURE);
     //check the corners
     if (config->map[i - 1][j - 1] == ' ') //top left corner
-        return (1);
+        return (FAILURE);
     if (config->map[i - 1][j + 1] == ' ') //top right corner
-        return (1);
+        return (FAILURE);
     if (config->map[i + 1][j - 1] == ' ') //bottom left corner
-        return (1);
+        return (FAILURE);
     if (config->map[i + 1][j + 1] == ' ') //bottom right corner
-        return (1);
-    return (0);
+        return (FAILURE);
+    return (SUCCESS);
 }
 
 // int valid_map(t_game *game)
@@ -109,7 +109,7 @@ static int	check_surrounding_spaces(t_config *config, int i, int j)
 //     int j;
 
 //     if (game->height < 3 || game->width < 3)
-//         return (1);
+//         return (FAILURE);
 //     i = 0;
 //     while (i < game->height)
 //     {
@@ -122,31 +122,31 @@ static int	check_surrounding_spaces(t_config *config, int i, int j)
 //                 break ;
 //             if ((i == 0 || i == game->height - 1)
 //                 && game->map[i][j] != '1' && game->map[i][j] != ' ')
-//                 return (1);
+//                 return (FAILURE);
 //             if ((j == 0 || j == game->width - 1) && game->map[i][j] != '1')
-//                 return (1);
+//                 return (FAILURE);
 //             if (game->map[i][j] == ' ')
 //             {
 //                 if (game->map[i][j - 1] != '1' && game->map[i][j - 1] != ' ')
-//                     return (1);
+//                     return (FAILURE);
 //                 if (game->map[i][j + 1] != '1' && game->map[i][j + 1] != ' ')
-//                     return (1);
+//                     return (FAILURE);
 //                 if ((i > 0 && (game->map[i - 1][j] != '1' && game->map[i - 1][j] != ' '))
 //                     || (i < game->height - 1
 //                     && (game->map[i + 1][j] != '1' && game->map[i + 1][j] != ' ')))
-//                     return (1);
+//                     return (FAILURE);
 //             }
 //             if (i > 0 && ft_strlen(game->map[i]) > ft_strlen(game->map[i - 1])
 //                 && j > (int)ft_strlen(game->map[i - 1]) && game->map[i][j] != '1')
-//                 return (1);
+//                 return (FAILURE);
 //             if (i < game->height - 1 && ft_strlen(game->map[i]) > ft_strlen(game->map[i + 1])
 //                 && j > (int)ft_strlen(game->map[i + 1]) && game->map[i][j] != '1')
-//                 return (1);
+//                 return (FAILURE);
 //             j++;
 //         }
 //         i++;
 //     }
-//     return (0);
+//     return (SUCCESS);
 // }
 
 //step 1
@@ -162,21 +162,21 @@ int parse_cub(char *line, t_config *config)
     {
         i++;
         if (line[i] == '\0')
-            return (0); //empty line, so we can ignore and move on to parsing next thing
+            return (SUCCESS); //empty line, so we can ignore and move on to parsing next thing
     }
     if (line[i] == 'N' && line[i + 1] == 'O')
-        return (set_config_path(&config->NO_texture_path, line, i + 2, "NO"));
+        return (set_config_path(&config->no_texture_path, line, i + 2, "NO"));
     else if (line[i] == 'S' && line[i + 1] == 'O')
-        return (set_config_path(&config->SO_texture_path, line, i + 2, "SO"));
+        return (set_config_path(&config->so_texture_path, line, i + 2, "SO"));
     else if (line[i] == 'W' && line[i + 1] == 'E')
-        return (set_config_path(&config->WE_texture_path, line, i + 2, "WE"));
+        return (set_config_path(&config->we_texture_path, line, i + 2, "WE"));
     else if (line[i] == 'E' && line[i + 1] == 'A')
-        return (set_config_path(&config->EA_texture_path, line, i + 2, "EA"));
+        return (set_config_path(&config->ea_texture_path, line, i + 2, "EA"));
     else if (line[i] == 'F')
         return (set_config_path(&config->floor_str, line, i + 1, "F"));
     else if (line[i] == 'C')
         return (set_config_path(&config->ceiling_str, line, i + 1, "C"));
-    return (0);
+    return (FAILURE);
 }
 
 static void	set_a_b_to_c(t_list **a, t_list **b, t_list **c)
@@ -232,13 +232,13 @@ int open_cub(t_config *config)
     if (!config->file_path)
     {
         printf("Error: No map file path provided\n");
-        return (1);
+        return (FAILURE);
     }
     fd = open(config->file_path, O_RDONLY);
     if (fd < 0)    
     {
         printf("Error: Could not open file\n");
-        return (1);
+        return (FAILURE);
     }
     while ((line = get_next_line(fd)) != NULL)
     {
@@ -254,15 +254,15 @@ int open_cub(t_config *config)
         {
             config->map = get_map_content(fd, line, config);
             if (!config->map)
-                return (close(fd), 1);
-            return (close(fd), 0);
+                return (close(fd), FAILURE);
+            return (close(fd), SUCCESS);
         }
-        if (parse_cub(line, config) == 1)
-            return (free(line), close(fd), 1);
+        if (parse_cub(line, config) == FAILURE)
+            return (free(line), close(fd), FAILURE);
         free(line);
     }
     close(fd);
-    return (1);
+    return (FAILURE);//wait is this failure?
 }
 
 
@@ -274,7 +274,7 @@ int		parse_cub_file(char *filepath, t_game *game)
     i = open_cub(&game->config);
     if (i != 0)
         return (FAILURE);
-    if (game->config.NO_texture_path == NULL || game->config.SO_texture_path == NULL || game->config.WE_texture_path == NULL || game->config.EA_texture_path == NULL || game->config.floor_str == NULL || game->config.ceiling_str == NULL)
+    if (game->config.no_texture_path == NULL || game->config.so_texture_path == NULL || game->config.we_texture_path == NULL || game->config.ea_texture_path == NULL || game->config.floor_str == NULL || game->config.ceiling_str == NULL)
     {
         printf("Error: Missing texture path or color in config file\n");
         return (FAILURE);

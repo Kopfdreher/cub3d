@@ -51,17 +51,17 @@ typedef struct s_keys {
 typedef struct s_config {
 	char		*file_path;
 	char		**map;
-	char		*NO_texture_path;
-	char		*SO_texture_path;
-	char		*WE_texture_path;
-	char		*EA_texture_path;
+	char		*no_texture_path;
+	char		*so_texture_path;
+	char		*we_texture_path;
+	char		*ea_texture_path;
 	char		*floor_str;
 	char		*ceiling_str;
 	int			map_width;
 	int			map_height;
 	int			floor_color;
 	int			ceiling_color;
-} t_config;
+}	t_config;
 
 typedef struct s_player {
 	double	pos_x;
@@ -74,9 +74,9 @@ typedef struct s_player {
 } t_player;
 
 typedef struct s_img {
-	void	*img_ptr;
-	char	*addr;
-	int		bits_per_pixel;
+	void	*img_ptr;// this is what mlx_xpm_file_to_image returns //dont forget to mlx_destroy_image if get data doesnt work
+	char	*addr; //this is what mlx_get_data_addr returns
+	int		bits_per_pixel; //send these nxt 3 to mlx_get_data_addr and it will fill them in for you
 	int		line_len;
 	int		endian;
 } t_img;
