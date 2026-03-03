@@ -21,7 +21,7 @@ INCS		= $(addprefix $(INC_DIR)/, $(INC_FILES))
 # Source files
 ERROR_FILES	=
 PARSE_FILES	=
-EXEC_FILES	= init_session
+EXEC_FILES	= init_session render_next_frame key_press_handler close_window_handler
 HELPER_FILES= helper_mlx
 SRC_FILES	= $(addsuffix .c, main\
 			  $(ERROR_FILES)\
