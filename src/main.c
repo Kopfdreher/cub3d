@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 16:08:56 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 15:55:44 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/03 17:10:35 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,22 @@
 int	parse_cub_file(char *arg, t_game *game)
 {
 	(void)arg;
-	(void)game;
+	game->config.floor_color = 0xff160c28;
+	game->config.ceiling_color = 0xffefcb68;
+
+	game->config.map = malloc(sizeof(char *) * 6);
+	game->config.map[0] = ft_strdup("11111");
+	game->config.map[1] = ft_strdup("11011");
+	game->config.map[2] = ft_strdup("10001");
+	game->config.map[3] = ft_strdup("10101");
+	game->config.map[4] = ft_strdup("11111");
+	game->config.map[5] = NULL;
+	game->player.pos_x = 2.5;
+	game->player.pos_y = 2.5;
+	game->player.dir_x = 0.0;
+	game->player.dir_y = 0.0;
+	game->player.plane_x = 0.66;
+	game->player.plane_y = 0.0;
 	return (SUCCESS);
 }
 
