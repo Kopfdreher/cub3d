@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 16:08:56 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 16:41:22 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/03 17:17:40 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (printf("Error: Invalid Arg-Count\n"), FAILURE);
 	ft_memset(&game, 0, sizeof(t_game));
-	if (parse_cub_file(argv[1], &game) == FAILURE)
+	if (parse_init(argv[1], &game) == FAILURE)
 		return (free_parse(&game.config), FAILURE);
 	print_config_debug(&game);
 	if (init_session(&game) == FAILURE)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:59:04 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/01 18:08:14 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/03 17:17:09 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "defines.h"
 
+//init
+int parse_init(char *filepath, t_game *game);
+
 int		parse_cub_file(char *filepath, t_game *game);
 int convert_color_str_to_int(t_config *config);
 char	**ft_lst_to_strarr_width(t_list **lst, int width);
@@ -22,8 +25,12 @@ char	**ft_lst_to_strarr_width(t_list **lst, int width);
 //free
 int free_parse(t_config *config);
 
+//helpers
+int	ft_isspace(char c);
 
 // Validation
+int	valid_cub_extension(char *filepath);
+
 int		check_file_extension(char *filepath);
 int		extract_colors(char *line, t_game *game);
 int		extract_textures(char *line, t_game *game);

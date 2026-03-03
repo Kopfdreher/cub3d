@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 15:27:41 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/03 17:28:22 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ typedef struct s_img {
 	int		bpp; //send these nxt 3 to mlx_get_data_addr and it will fill them in for you
 	int		line_len;
 	int		endian;
+	int		width; //store width and height for convenience
+	int		height;
 } t_img;
 
 typedef struct s_graphics {

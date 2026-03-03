@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:29:53 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/03 16:50:51 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/03 17:20:00 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ int	parse_cub(char *line, t_config *config)
 	int	i;
 
 	i = 0;
-	while (line[i] == ' ')
+	while (ft_isspace(line[i]))
 	{
 		i++;
 		if (line[i] == '\0')
@@ -320,7 +320,17 @@ int	parse_cub_file(char *filepath, t_game *game)
 		return (printf("Error: Missing map in config file\n"), FAILURE);
 	if (valid_map(&game->config, &game->player) == 1)
 		return (printf("Error: Invalid map\n"), FAILURE);
+	return (SUCCESS);
+}
+
+int parse_init(char *filepath, t_game *game)
+{
+	if (valid_cub_extension(filepath) == FAILURE)
+		return (FAILURE);
+	//should also check for valid texture extensions
+	if (parse_cub_file(filepath, game) == FAILURE)
+		return (FAILURE);
 	if (convert_color_str_to_int(&game->config) == FAILURE)
-		return (printf("Error: Invalid color\n"), FAILURE);
+		return (FAILURE);
 	return (SUCCESS);
 }

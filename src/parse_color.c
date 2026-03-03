@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:17:25 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/03 16:33:30 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/03 17:09:53 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,6 @@ void	free_cf_strarr(char **floor_colors, char **ceiling_colors,
 		printf("%s", error_msg);
 	free_strarr(&ceiling_colors);
 	free_strarr(&floor_colors);
-}
-
-static int	ft_isspace(char c)
-{
-	if (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v')
-		return (1);
-	else
-		return (0);
 }
 
 //this checks that the color string contains at least one digit, and that all non-space characters are digits
@@ -49,18 +40,21 @@ int	ft_isdigit_in_str(char *str)
 int	ft_is_only_digit_str(char *str)
 {
 	int	j;
+	int	digit_found;
 
 	j = 0;
-	while (str[j])
+	digit_found = 0;
+	while (str[j] && ft_isspace(str[j]))
+		j++;
+	while (str[j] && ft_isdigit((int)str[j]))
 	{
-		while (str[j] && ft_isspace(str[j]))
-			j++;
-		if (!str[j])
-			break ;
-		if (!ft_isdigit((int)str[j]))
-			return (FAILURE);
+		digit_found = 1;
 		j++;
 	}
+	while (str[j] && ft_isspace(str[j]))
+		j++;
+	if (!digit_found || str[j] != '\0')
+		return (FAILURE);
 	return (SUCCESS);
 }
 
