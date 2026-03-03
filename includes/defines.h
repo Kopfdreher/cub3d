@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/01 17:40:09 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/03 14:19:31 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ typedef struct s_player {
 } t_player;
 
 typedef struct s_img {
-	void	*img_ptr;// this is what mlx_xpm_file_to_image returns //dont forget to mlx_destroy_image if get data doesnt work
+	void	*img;// this is what mlx_xpm_file_to_image returns //dont forget to mlx_destroy_image if get data doesnt work
 	char	*addr; //this is what mlx_get_data_addr returns
-	int		bits_per_pixel; //send these nxt 3 to mlx_get_data_addr and it will fill them in for you
+	int		bpp; //send these nxt 3 to mlx_get_data_addr and it will fill them in for you
 	int		line_len;
 	int		endian;
 } t_img;
@@ -84,7 +84,7 @@ typedef struct s_img {
 typedef struct s_graphics {
 	void	*mlx;
 	void	*win;
-	t_img	buffer;
+	t_img	buff;
 	t_img	textures[4];  // NORTH, SOUTH, WEST, EAST
 } t_graphics;
 

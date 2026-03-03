@@ -83,7 +83,7 @@ int valid_map(t_config *config, t_player *player)
 
 static int	check_surrounding_spaces(t_config *config, int i, int j)
 {
-    if ((config->map[i][j - 1] == ' ') ) //one behind
+    if (config->map[i][j - 1] == ' ') //one behind
         return (FAILURE);
     if (config->map[i][j + 1] == ' ') //one in front
         return (FAILURE);

@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:52:06 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/01 15:58:55 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/03 13:33:33 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@
 # include "defines.h"
 
 // Initialization
-int		init_mlx_win(t_game *game);
+int		init_session(t_game *game);
 int		load_textures(t_game *game);
+
+// MLX
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 
 // Game Loop & Render
 int		render_next_frame(t_game *game);
@@ -32,5 +35,8 @@ int		close_window_handler(t_game *game);
 // Movement
 void	move_player(t_game *game);
 void	rotate_camera(t_game *game, double rotation_speed);
+
+// CleanUp
+void	clean_up(t_game *game);
 
 #endif

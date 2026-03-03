@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 16:08:56 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/01 16:57:32 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/03 14:22:08 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ static void	print_config_debug(t_game *game)
 	}
 }
 
+/*
+void	init_hooks(t_game *game)
+{
+	mlx_hook(game->gfx.win, 2, 1L << 0, key_press_handler, game);
+	mlx_hook(game->gfx.win, 3, 1L << 0, key_release_handler, game);
+	mlx_hook(game->gfx.win, 17, 0, close_window_handler, game);
+	mlx_loop_hook(game->gfx.mlx, render_next_frame, game);
+}
+*/
 
 int	main(int argc, char **argv)
 {
@@ -47,11 +56,10 @@ int	main(int argc, char **argv)
 	if (parse_cub_file(argv[1], &game) == FAILURE)
 		return (free_parse(&game.config), FAILURE);
 	print_config_debug(&game);
-	/* 
-	need to init mlx bfore I can work with textures
-	if (init_mlx_win(&game) == FAILURE)
-		return (FAILURE);
-	mlx_loop_hook(game.gfx.mlx, render_next_frame, &game);
+	if (init_session(&game) == FAILURE)
+		return (free_parse(&game.config), FAILURE);
+	/*
+	init_hooks(*game);
 	mlx_loop(game.gfx.mlx);
 	*/
 	return (free_parse(&game.config), SUCCESS);
