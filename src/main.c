@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 16:08:56 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 16:03:08 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:41:22 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	print_config_debug(t_game *game)
 	printf("map_width: %d\n", game->config.map_width);
 	printf("map_height: %d\n", game->config.map_height);
 	printf("player_char: %c\n", game->player.player_char);
-	printf("colors: floor: %d, ceiling: %d\n", game->config.floor_color, game->config.ceiling_color);
+	printf("colors: floor: %x, ceiling: %x\n", game->config.floor_color, game->config.ceiling_color);
 	printf("map:\n");
 	i = 0;
 	while (game->config.map && game->config.map[i])
