@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:59:04 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 17:17:09 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/03 18:40:59 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int parse_init(char *filepath, t_game *game);
 int		parse_cub_file(char *filepath, t_game *game);
 int convert_color_str_to_int(t_config *config);
 char	**ft_lst_to_strarr_width(t_list **lst, int width);
-
+int	parse_img(t_game *game);
 //free
 int free_parse(t_config *config);
 

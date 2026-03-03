@@ -1,9 +1,9 @@
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./textures/BRICK_3D.xpm
+SO ./textures/BRICK_3D.xpm
+WE ./textures/BRICK_3B.xpm
+EA ./textures/BRICK_3B.xpm
 F 220,100,9
-	C 	225,0         	,99 			
-NO ./patje
+C 	225,0         	,99 			
 
 11111111111111111111111111111111111111
 

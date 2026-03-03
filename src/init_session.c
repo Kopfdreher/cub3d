@@ -14,8 +14,7 @@
 
 int		load_textures(t_game *game)
 {
-	(void)game;
-	return (SUCCESS);
+	return (parse_img(game));
 }
 
 int	init_session(t_game *game)
