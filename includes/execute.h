@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:52:06 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/01 19:05:28 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/03 13:33:33 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include "defines.h"
 
 // Initialization
-int		init_game_structs(t_game *game);
-int		init_mlx_win(t_game *game);
+int		init_session(t_game *game);
 int		load_textures(t_game *game);
 
 // MLX

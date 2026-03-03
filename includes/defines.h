@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/01 17:40:09 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/03 14:19:31 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ typedef struct s_player {
 } t_player;
 
 typedef struct s_img {
-	void	*img_ptr;
+	void	*img;
 	char	*addr;
-	int		bits_per_pixel;
+	int		bpp;
 	int		line_len;
 	int		endian;
 } t_img;
@@ -84,7 +84,7 @@ typedef struct s_img {
 typedef struct s_graphics {
 	void	*mlx;
 	void	*win;
-	t_img	buffer;
+	t_img	buff;
 	t_img	textures[4];  // NORTH, SOUTH, WEST, EAST
 } t_graphics;
 
