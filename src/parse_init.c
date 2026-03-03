@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:29:53 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/03 15:39:48 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:50:51 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,21 +315,12 @@ int	parse_cub_file(char *filepath, t_game *game)
 		|| game->config.ea_texture_path == NULL 
 		|| game->config.floor_str == NULL 
 		|| game->config.ceiling_str == NULL)
-	{
-		printf("Error: Missing texture path or color in config file\n");
-		return (FAILURE);
-	}
+		return (printf("Error: Missing texture path or color\n"), FAILURE);
 	if (game->config.map == NULL)
-	{
-		printf("Error: Missing map in config file\n");
-		return (FAILURE);
-	}
+		return (printf("Error: Missing map in config file\n"), FAILURE);
 	if (valid_map(&game->config, &game->player) == 1)
-	{
-		printf("Error: Invalid map\n");
-		return (FAILURE);
-	}
+		return (printf("Error: Invalid map\n"), FAILURE);
 	if (convert_color_str_to_int(&game->config) == FAILURE)
-		return (FAILURE);
+		return (printf("Error: Invalid color\n"), FAILURE);
 	return (SUCCESS);
 }
