@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:29:53 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/03 17:20:00 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/04 21:24:22 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,26 @@ static int is_player_char(char c)
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
+static void	set_orientation_values(t_player *player, 
+	double d_x, double d_y, double p_x, double p_y)
+{
+	player->dir_x = d_x;
+	player->dir_y = d_y;
+	player->plane_x = p_x;
+	player->plane_y = p_y;
+}
+
+static void	set_player_orientation(t_player *player)
+{
+	if (player->player_char == 'N')
+		set_orientation_values(player, 0, -1, 0.90, 0);
+	if (player->player_char == 'S')
+		set_orientation_values(player, 0, 1, -0.90, 0);
+	if (player->player_char == 'E')
+		set_orientation_values(player, 1, 0, 0, 0.90);
+	if (player->player_char == 'W')
+		set_orientation_values(player, -1, 0, 0, -0.90);
+}
 
 static int all_chars_valid(t_config *config, t_player *player, int i, int j)
 {
@@ -97,6 +117,9 @@ static int all_chars_valid(t_config *config, t_player *player, int i, int j)
 				if (player->player_char != '\0')
 					return (FAILURE);
 				player->player_char = config->map[i][j];
+				player->pos_x = (double)j + 0.5;
+				player->pos_y = (double)i + 0.5;
+				set_player_orientation(player);
 			}
 			j++;
 		}

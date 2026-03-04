@@ -6,17 +6,43 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 17:48:23 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/04 20:37:29 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/04 21:57:45 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+static int	is_valid_pos(t_game *game, double x, double y)
+{
+	int	grid_x;
+	int	grid_y;
+
+	grid_x = (int)x;
+	grid_y = (int)y;
+	if (grid_x < 0 || grid_x >= game->config.map_width ||
+		grid_y < 0 || grid_y >= game->config.map_height)
+		return (FALSE);
+	if (!game->config.map[grid_y])
+		return (FALSE);
+	if (game->config.map[grid_y][grid_x] == '1' ||
+		game->config.map[grid_y][grid_x] == ' ')
+		return (FALSE);
+	return (TRUE);
+}
+
 static void	insert_valid_pos(double new_x, double new_y, t_game *game)
 {
-	if (game->config.map[(int)game->player.pos_y][(int)new_x] != '1')
+	double	buffer;
+
+	buffer = 0.2;
+	if (new_x < game->player.pos_x)
+		buffer = -0.2;
+	if (is_valid_pos(game, new_x + buffer, game->player.pos_y))
 		game->player.pos_x = new_x;
-	if (game->config.map[(int)new_y][(int)game->player.pos_x] != '1')
+	buffer = 0.2;
+	if (new_y < game->player.pos_y)
+		buffer = -0.2;
+	if (is_valid_pos(game, game->player.pos_x, new_y + buffer))
 		game->player.pos_y = new_y;
 }
 

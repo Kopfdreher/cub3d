@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:22:40 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/04 20:59:22 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/04 21:00:35 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@ int	close_window_handler(t_game *game)
 		mlx_destroy_display(game->gfx.mlx);
 	free(game->gfx.mlx);
 	free_parse(&game->config);
-	free(game->config.map[0]);
-	free(game->config.map[1]);
-	free(game->config.map[2]);
-	free(game->config.map[3]);
-	free(game->config.map[4]);
-	free(game->config.map);
 	exit(SUCCESS);
 	return (SUCCESS);
 }

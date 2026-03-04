@@ -6,11 +6,12 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 17:06:53 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/03 17:08:52 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/04 21:03:10 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
 int	ft_isspace(char c)
 {
 	if (c == ' ' || c == '\f' || c == '\n'
