@@ -58,6 +58,8 @@ int	ft_is_only_digit_str(char *str)
 	return (SUCCESS);
 }
 
+//check that each color string contains at least one digit
+//this is to catch cases like "F: 255, , 255" where the middle color is missing but we still have 3 color strings
 int	color_count_check(char **floor_colors, char **ceiling_colors)
 {
 	int		i;
@@ -66,20 +68,16 @@ int	color_count_check(char **floor_colors, char **ceiling_colors)
 	i = 0;
 	while (floor_colors[i])
 	{
-		//check that each color string contains at least one digit
-			//this is to catch cases like "F: 255, , 255" where the middle color is missing but we still have 3 color strings
-		if (ft_isdigit_in_str(floor_colors[i]) == FAILURE)
-			return (FAILURE);
-		if (ft_is_only_digit_str(floor_colors[i]) == FAILURE)
+		if ((ft_isdigit_in_str(floor_colors[i]) == FAILURE)
+			|| ft_is_only_digit_str(floor_colors[i]) == FAILURE)
 			return (FAILURE);
 		i++;
 	}
 	j = 0;
 	while (ceiling_colors[j])
 	{
-		if (ft_isdigit_in_str(ceiling_colors[j]) == FAILURE)
-			return (FAILURE);
-		if (ft_is_only_digit_str(ceiling_colors[j]) == FAILURE)
+		if ((ft_isdigit_in_str(ceiling_colors[j]) == FAILURE) 
+		|| (ft_is_only_digit_str(ceiling_colors[j]) == FAILURE))
 			return (FAILURE);
 		j++;
 	}

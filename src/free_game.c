@@ -36,3 +36,34 @@ int	free_parse(t_config *config)
 	config->map = NULL;
 	return (SUCCESS);
 }
+
+void destroy_loaded_images(t_game *game)
+{
+	int i;
+
+	i = 0;
+	if (!game)
+		return ;
+	while (i < 4)
+	{
+		if (game->gfx.mlx && game->gfx.textures[i].img)
+			mlx_destroy_image(game->gfx.mlx, game->gfx.textures[i].img);
+		ft_bzero(&game->gfx.textures[i], sizeof(t_img));
+		i++;
+	}
+}
+
+int	free_game(t_game *game)
+{
+	if (!game)
+		return (SUCCESS);
+	if (game->gfx.mlx && game->gfx.buff.img)
+		mlx_destroy_image(game->gfx.mlx, game->gfx.buff.img);
+	if (game->gfx.mlx && game->gfx.win)
+		mlx_destroy_window(game->gfx.mlx, game->gfx.win);
+	if (game->gfx.mlx)
+		mlx_destroy_display(game->gfx.mlx);
+	free(game->gfx.mlx);
+	game->gfx.mlx = NULL;
+	return (SUCCESS);
+}

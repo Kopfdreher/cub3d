@@ -14,6 +14,7 @@
 
 int	close_window_handler(t_game *game)
 {
+	destroy_loaded_images(game);
 	if (game->gfx.buff.img)
 		mlx_destroy_image(game->gfx.mlx, game->gfx.buff.img);
 	if (game->gfx.win)

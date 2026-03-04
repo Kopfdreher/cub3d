@@ -38,5 +38,7 @@ void	rotate_camera(t_game *game, double rotation_speed);
 
 // CleanUp
 void	clean_up(t_game *game);
+void	destroy_loaded_images(t_game *game);
+int		free_game(t_game *game);
 
 #endif

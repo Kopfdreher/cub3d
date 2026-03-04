@@ -14,7 +14,12 @@
 
 int		load_textures(t_game *game)
 {
-	return (parse_img(game));
+	if (parse_img(game) == FAILURE)
+	{
+		destroy_loaded_images(game);
+		return (FAILURE);
+	}
+	return (SUCCESS);
 }
 
 int	init_session(t_game *game)
@@ -25,18 +30,18 @@ int	init_session(t_game *game)
 	game->gfx.win =
 		mlx_new_window(game->gfx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3d");
 	if (!game->gfx.win)
-	{
-		mlx_destroy_display(game->gfx.mlx);
-		free(game->gfx.mlx);
-		return (FAILURE);
-	}
+		return (free_game(game), FAILURE);
 	game->gfx.buff.img =
 		mlx_new_image(game->gfx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	if (!game->gfx.buff.img)
+		return (free_game(game), FAILURE);
 	game->gfx.buff.addr =
 		mlx_get_data_addr(game->gfx.buff.img, &game->gfx.buff.bpp,
 			&game->gfx.buff.line_len, &game->gfx.buff.endian);
+	if (!game->gfx.buff.addr)
+		return (free_game(game), FAILURE);
 	if (load_textures(game) == FAILURE)
-		return (FAILURE);
+		return (free_game(game), FAILURE);
 	return (SUCCESS);
 }
 

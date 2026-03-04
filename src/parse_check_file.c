@@ -23,3 +23,13 @@ int	valid_cub_extension(char *filepath)
 	return (SUCCESS);
 }
 
+int	valid_xpm_extension(char *filepath)
+{
+	int	len;
+
+	len = ft_strlen(filepath);
+	if (len < 4 || ft_strncmp(filepath + len - 4, ".xpm", 4) != 0)
+		return (printf("Error: Invalid file extension, expected .xpm\n"),
+			FAILURE);
+	return (SUCCESS);
+}

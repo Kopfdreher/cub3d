@@ -30,6 +30,7 @@ int	ft_isspace(char c);
 
 // Validation
 int	valid_cub_extension(char *filepath);
+int	valid_xpm_extension(char *filepath);
 
 int		check_file_extension(char *filepath);
 int		extract_colors(char *line, t_game *game);

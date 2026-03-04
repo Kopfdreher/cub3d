@@ -35,10 +35,16 @@ char	**insert_content(t_list **lst, char **strarr, int width, int i)
 	while (j < width)
 		strarr[i][j++] = ' ';
 	strarr[i][width] = '\0';
-	free (content);
-	return (strarr);
+	return (free (content), strarr);
 }
 
+static void	init_strarr(t_list **lst, int width, int *lst_size, char ***strarr)
+{
+	if (width < 0)
+		width = 0;
+	*lst_size = ft_lstsize(*lst);
+	*strarr = malloc(sizeof(char *) * (*lst_size + 1));
+}
 /*Allocates and pads strings to width
 Stops at newline when encountered
 Frees list nodes and handles errors properly
@@ -51,10 +57,7 @@ char	**ft_lst_to_strarr_width(t_list **lst, int width)
 	int		i;
 	char	**strarr;
 
-	if (width < 0)
-		width = 0;
-	lst_size = ft_lstsize(*lst);
-	strarr = malloc(sizeof(char *) * (lst_size + 1));
+	init_strarr(lst, width, &lst_size, &strarr);
 	if (!strarr)
 		return (ft_lstclear(lst, free), NULL);
 	i = 0;

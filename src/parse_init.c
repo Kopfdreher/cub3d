@@ -12,106 +12,6 @@
 
 #include "cub3d.h"
 
-static int	check_surrounding_spaces(t_config *config, int i, int j);
-
-//copilot broke this out so that I dont have reapeat code
-static int	set_config_path(char **target, char *line,
-	int start_idx, char *label)
-{
-	if (*target != NULL)
-	{
-		printf("Error: Duplicate %s texture path\n", label);
-		return (FAILURE);
-	}
-	*target = ft_strdup(line + start_idx);
-	if (*target == NULL)
-	{
-		printf("Error: Could not allocate memory for %s texture path\n", label);
-		return (FAILURE);
-	}
-	return (SUCCESS);
-}
-
-// Ignore all leading whitespaces.
-// If the current row is the 0th row or the final row, 
-//	only accept '1's and ' 's.
-// else, The first and final character should always be a '1'.
-// In the case of any non leading whitespaces, the only acceptable characters 
-// 	adjacent to the space are '1's or ' 's.
-// if strlen(curr_row) > strlen(row_on_top) && current col > strlen(row_on_top)
-// 	current character should be '1'
-// If strlen(curr_row) > strlen(row_on_bottom) && 
-// 	current col > strlen(row_on_bottom), current character should be '1'
-// copilot was filling some of this in but I made sure to understand it and 
-// 	that it followed the map requirements, so I kept it. I also added some 
-//	additional checks to make sure we have a map to validate and that we skip 
-//		leading whitespace before checking the other conditions.0
-/*we first check to make sure all chars are valid and only 1 player char*/
-/* I keep the player char in place so that we can check it for validity 
-and then use it later when we initialize the player struct */
-/*	while (i < config->map_height) // then check to make sure the map is valid*/
-int valid_map(t_config *config, t_player *player)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-
-	if (config->map_height < 3 || config->map_width < 3)
-		return (FAILURE);
-	while (i < config->map_height)
-	{
-		j = 0;
-		while (j < config->map_width)
-		{
-			if (config->map[i][j] != '1' && config->map[i][j] != '0' 
-				&& config->map[i][j] != ' ' && config->map[i][j] != '\0' 
-				&& config->map[i][j] != 'N' && config->map[i][j] != 'S' 
-				&& config->map[i][j] != 'E' && config->map[i][j] != 'W')
-				return (FAILURE);
-			if (config->map[i][j] == 'N' || config->map[i][j] == 'S' 
-				|| config->map[i][j] == 'E' || config->map[i][j] == 'W')
-			{
-				if (player->player_char != '\0')
-					return (FAILURE);
-				player->player_char = config->map[i][j];
-			}
-			j++;
-		}
-		i++;
-	}
-	if (player->player_char == '\0')
-		return (FAILURE);
-	i = 0;
-	while (i < config->map_height)
-	{
-		j = 0;
-		while (j < config->map_width)
-		{
-			while (config->map[i][j] == ' ')
-				j++;
-			if (j >= config->map_width)
-				break ;
-			if ((i == 0 || i == config->map_height - 1)
-				&& config->map[i][j] != '1' && config->map[i][j] != ' ')
-				return (FAILURE);
-			if ((j == 0 || j == config->map_width - 1) 
-				&& config->map[i][j] != '1' && config->map[i][j] != ' ')
-				return (FAILURE);
-			if (config->map[i][j] == '0' || config->map[i][j] == 'N' 
-				|| config->map[i][j] == 'S' || config->map[i][j] == 'E' 
-				|| config->map[i][j] == 'W')
-			{
-				if (check_surrounding_spaces(config, i, j) == FAILURE)
-					return (FAILURE);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (SUCCESS);
-}
-
 /*check behind, in front, above, below, 
 top left corner, top right corner, bottom left corner, bottom right corner*/
 static int	check_surrounding_spaces(t_config *config, int i, int j)
@@ -134,6 +34,142 @@ static int	check_surrounding_spaces(t_config *config, int i, int j)
 		return (FAILURE);
 	return (SUCCESS);
 }
+
+static char *trim_path_ws(char *original, int start_idx, char *label)
+{
+	char	*trimmed;
+	trimmed = ft_strtrim(original + start_idx, " \t\n\r\v\f");
+	if (!trimmed)
+	{
+		printf("Error: Could not allocate memory for %s texture path\n", label);
+		return (NULL);
+	}
+	if (!*trimmed)
+	{
+		printf("Error: value is empty for %s\n", label);
+		free(trimmed);
+		return (NULL);
+	}
+	return(trimmed);
+}
+
+//copilot broke this out so that I dont have reapeat code
+static int	set_config_path(char **target, char *line,
+	int start_idx, char *label)
+{
+	if (*target != NULL)
+	{
+		printf("Error: Duplicate %s texture path\n", label);
+		return (FAILURE);
+
+	}
+	*target = trim_path_ws(line, start_idx, label);
+	if (*target == NULL)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+
+static int is_valid_map_char(char c)
+{
+	return (c == '1' || c == '0' || c == ' ' || c == '\0' 
+		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
+static int is_player_char(char c)
+{
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
+
+static int all_chars_valid(t_config *config, t_player *player, int i, int j)
+{
+	i = 0;
+	while (i < config->map_height)
+	{
+		j = 0;
+		while (j < config->map_width)
+		{
+			if (!is_valid_map_char(config->map[i][j]))
+				return (FAILURE);
+			if (is_player_char(config->map[i][j]))
+			{
+				if (player->player_char != '\0')
+					return (FAILURE);
+				player->player_char = config->map[i][j];
+			}
+			j++;
+		}
+		i++;
+	}
+	if (player->player_char == '\0')
+		return (FAILURE);
+	return(SUCCESS);
+}
+
+static int check_boarders(t_config *config, int i, int j)
+{
+	if ((i == 0 || i == config->map_height - 1)
+		&& config->map[i][j] != '1' && config->map[i][j] != ' ')
+		return (FAILURE);
+	if ((j == 0 || j == config->map_width - 1) 
+		&& config->map[i][j] != '1' && config->map[i][j] != ' ')
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+static int check_boarder_and_zero(t_config *config, int i, int j)
+{
+	i = 0;
+	while (i < config->map_height)
+	{
+		j = 0;
+		while (j < config->map_width)
+		{
+			while (config->map[i][j] == ' ')
+				j++;
+			if (j >= config->map_width)
+				break ;
+			if (check_boarders(config, i, j) == FAILURE)
+				return (FAILURE);
+			if (config->map[i][j] == '0' || is_player_char(config->map[i][j]))
+			{
+				if (check_surrounding_spaces(config, i, j) == FAILURE)
+					return (FAILURE);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+// Ignore all leading whitespaces.
+// If the current row is the 0th row or the final row, 
+//	only accept '1's and ' 's.
+// else, The first and final character should always be a '1'.
+// In the case of any non leading whitespaces, the only acceptable characters 
+// 	adjacent to the space are '1's or ' 's.
+// if strlen(curr_row) > strlen(row_on_top) && current col > strlen(row_on_top)
+// 	current character should be '1'
+// If strlen(curr_row) > strlen(row_on_bottom) && 
+// 	current col > strlen(row_on_bottom), current character should be '1'
+// copilot was filling some of this in but I made sure to understand it and 
+// 	that it followed the map requirements, so I kept it. I also added some 
+//	additional checks to make sure we have a map to validate and that we skip 
+//		leading whitespace before checking the other conditions.0
+/*we first check to make sure all chars are valid and only 1 player char*/
+/* I keep the player char in place so that we can check it for validity 
+and then use it later when we initialize the player struct */
+/*	while (i < config->map_height) // then check to make sure the map is valid*/
+int valid_map(t_config *config, t_player *player)
+{
+	if (config->map_height < 3 || config->map_width < 3)
+		return (FAILURE);
+	if (all_chars_valid(config, player, 0, 0) == FAILURE)
+		return (FAILURE);
+	return(check_boarder_and_zero(config, 0, 0));
+}
+
 
 // int valid_map(t_game *game)
 // {
@@ -217,20 +253,48 @@ static void	set_a_b_to_c(t_list **a, t_list **b, t_list **c)
 	*b = *c;
 }
 
+static int add_nodes_to_list(char *line, t_list **head, t_list **tail)
+{
+	t_list	*node;
+
+	node = ft_lstnew(line);
+	if (!node && !*head)
+		return (FAILURE);
+	if (!node)
+		return (ft_lstclear(head, free), FAILURE);
+	if (!*head)
+		set_a_b_to_c(head, tail, &node);
+	else
+	{
+		(*tail)->next = node;
+		*tail = node;
+	}
+	return (SUCCESS);
+}
+
+static int init_map_list(t_list **head, t_list **tail,
+	char *first_line, t_config *config)
+{
+	t_list	*node;
+
+	config->map_width = 0;
+	*head = NULL;
+	node = ft_lstnew(first_line);
+	if (!node)
+		return (free(first_line), FAILURE);
+	set_a_b_to_c(head, tail, &node);
+	config->map_width = ft_strlen(first_line);
+	return (SUCCESS);
+}
+
 char	**get_map_content(int map_fd, char *first_line, t_config *config)
 {
 	t_list	*head;
 	t_list	*tail;
-	t_list	*node;
 	char	*line;
 
-	config->map_width = 0;
-	head = NULL;
-	node = ft_lstnew(first_line);
-	if (!node)
-		return (free(first_line), NULL);
-	set_a_b_to_c(&head, &tail, &node);
-	config->map_width = ft_strlen(first_line);
+	if (init_map_list(&head, &tail, first_line, config) == FAILURE)
+		return (NULL);
 	while (1)
 	{
 		line = get_next_line(map_fd);
@@ -238,21 +302,49 @@ char	**get_map_content(int map_fd, char *first_line, t_config *config)
 			break ;
 		if (ft_strlen(line) > (size_t)config->map_width)
 			config->map_width = ft_strlen(line);
-		node = ft_lstnew(line);
-		if (!node && !head)
+		if (add_nodes_to_list(line, &head, &tail) == FAILURE)
 			return (NULL);
-		if (!node)
-			return (ft_lstclear(&head, free), NULL);
-		if (!head)
-			set_a_b_to_c(&head, &tail, &node);
-		else
-		{
-			tail->next = node;
-			tail = node;
-		}
 	}
 	config->map_height = ft_lstsize(head);
 	return (ft_lst_to_strarr_width(&head, config->map_width));
+}
+
+static int init_cub_errors(t_config *config, int *fd)
+{
+	if (!config->file_path)
+	{
+		printf("Error: No map file path provided\n");
+		return (FAILURE);
+	}
+	*fd = open(config->file_path, O_RDONLY);
+	if (*fd < 0)
+	{
+		printf("Error: Could not open file\n");
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+static int check_line_for_ws(char **line, int fd, int *i)
+{
+	*i = 0;
+	while ((*line)[*i] == ' ' || (*line)[*i] == '\t')
+		(*i)++;
+	if ((*line)[*i] == '\n' || (*line)[*i] == '\0')
+	{
+		free(*line);
+		*line = get_next_line(fd);
+		return (ERROR);
+	}
+	return (SUCCESS);
+}
+
+static int assign_map_content(t_config *config, int fd, char *line)
+{
+	config->map = get_map_content(fd, line, config);
+	if (!config->map)
+		return (close(fd), FAILURE);
+	return (close(fd), SUCCESS);
 }
 
 int	open_cub(t_config *config)
@@ -261,43 +353,21 @@ int	open_cub(t_config *config)
 	char	*line;
 	int		i;
 
-	if (!config->file_path)
-	{
-		printf("Error: No map file path provided\n");
+	if (init_cub_errors(config, &fd) == FAILURE)
 		return (FAILURE);
-	}
-	fd = open(config->file_path, O_RDONLY);
-	if (fd < 0)
-	{
-		printf("Error: Could not open file\n");
-		return (FAILURE);
-	}
 	line = get_next_line(fd);
 	while ((line != NULL))
 	{
-		i = 0;
-		while (line[i] == ' ' || line[i] == '\t')
-			i++;
-		if (line[i] == '\n' || line[i] == '\0')
-		{
-			free(line);
-			line = get_next_line(fd);
+		if (check_line_for_ws(&line, fd, &i) == ERROR)
 			continue ;
-		}
 		if (line[i] == '1' || line[i] == '0')
-		{
-			config->map = get_map_content(fd, line, config);
-			if (!config->map)
-				return (close(fd), FAILURE);
-			return (close(fd), SUCCESS);
-		}
+			return(assign_map_content(config, fd, line));
 		if (parse_cub(line, config) == FAILURE)
 			return (free(line), close(fd), FAILURE);
 		free(line);
 		line = get_next_line(fd);
 	}
-	close(fd);
-	return (FAILURE);
+	return (close(fd), FAILURE);
 }
 
 /*after we check for files being there we check for validity of map*/
