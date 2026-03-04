@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 17:48:23 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/04 18:41:23 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/04 20:37:29 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static void	move_forward_backward(t_game *game)
 
 static void	move_left_right(t_game *game)
 {
-	double perp_x;
-	double perp_y;
-	double new_x;
-	double new_y;
+	double	perp_x;
+	double	perp_y;
+	double	new_x;
+	double	new_y;
 
 	perp_x = -game->player.dir_y;
 	perp_y = game->player.dir_x;
@@ -79,13 +79,13 @@ static void	rotate_camera(t_game *game)
 		rot = -ROTATE_SPEED;
 	if (game->keys.left || game->keys.right)
 	{
-		game->player.dir_x =
+		game->player.dir_x = 
 			game->player.dir_x * cos(rot) - game->player.dir_y * sin(rot);
-		game->player.dir_y =
+		game->player.dir_y = 
 			old_dir_x * sin(rot) + game->player.dir_y * cos(rot);
-		game->player.plane_x =
+		game->player.plane_x = 
 			game->player.plane_x * cos(rot) - game->player.plane_y * sin(rot);
-		game->player.plane_y =
+		game->player.plane_y = 
 			old_plane_x * sin(rot) + game->player.plane_y * cos(rot);
 	}
 }

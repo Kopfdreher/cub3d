@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/04 17:51:46 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/04 20:44:51 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,34 @@
 // ENUMS -----------------------------------------------------------------------
 
 typedef enum e_direction {
-	NORTH, // 0
-	SOUTH, // 1
-	WEST, // 2
-	EAST // 3
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST
 }	t_direction;
 
 // STRUCTS ---------------------------------------------------------------------
+
+typedef struct s_ray {
+	double	camera_x;
+	double	dir_x;
+	double	dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	wall_dist;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		color;
+}	t_ray;
 
 typedef struct s_keys {
 	int	w;
@@ -61,22 +82,22 @@ typedef struct s_keys {
 	int	d;
 	int	left;
 	int	right;
-} t_keys;
+}	t_keys;
 
 typedef struct s_config {
 	char		*file_path;
 	char		**map;
-	char		*NO_texture_path;
-	char		*SO_texture_path;
-	char		*WE_texture_path;
-	char		*EA_texture_path;
+	char		*no_texture_path;
+	char		*so_texture_path;
+	char		*we_texture_path;
+	char		*ea_texture_path;
 	char		*floor_str;
 	char		*ceiling_str;
 	int			map_width;
 	int			map_height;
 	int			floor_color;
 	int			ceiling_color;
-} t_config;
+}	t_config;
 
 typedef struct s_player {
 	double	pos_x;
@@ -86,7 +107,7 @@ typedef struct s_player {
 	double	plane_x;
 	double	plane_y;
 	char	player_char;
-} t_player;
+}	t_player;
 
 typedef struct s_img {
 	void	*img;
@@ -94,20 +115,21 @@ typedef struct s_img {
 	int		bpp;
 	int		line_len;
 	int		endian;
-} t_img;
+}	t_img;
 
+// t_img	textures[4];  NORTH, SOUTH, WEST, EAST
 typedef struct s_graphics {
 	void	*mlx;
 	void	*win;
 	t_img	buff;
-	t_img	textures[4];  // NORTH, SOUTH, WEST, EAST
-} t_graphics;
+	t_img	textures[4];
+}	t_graphics;
 
 typedef struct s_game {
 	t_config	config;
 	t_player	player;
 	t_graphics	gfx;
 	t_keys		keys;
-} t_game;
+}	t_game;
 
 #endif
