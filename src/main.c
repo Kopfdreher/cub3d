@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 16:08:56 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 17:17:40 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/04 20:58:16 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,13 @@ static void	print_config_debug(t_game *game)
 	}
 }
 
-/*
-void	init_hooks(t_game *game)
+static void	init_hooks(t_game *game)
 {
 	mlx_hook(game->gfx.win, 2, 1L << 0, key_press_handler, game);
-	mlx_hook(game->gfx.win, 3, 1L << 0, key_release_handler, game);
+	mlx_hook(game->gfx.win, 3, 1L << 1, key_release_handler, game);
 	mlx_hook(game->gfx.win, 17, 0, close_window_handler, game);
+	mlx_loop_hook(game->gfx.mlx, render_next_frame, game);
 }
-*/
 
 int	main(int argc, char **argv)
 {
@@ -58,11 +57,7 @@ int	main(int argc, char **argv)
 	print_config_debug(&game);
 	if (init_session(&game) == FAILURE)
 		return (free_parse(&game.config), FAILURE);
-
-	mlx_hook(game.gfx.win, 2, 1L << 0, key_press_handler, &game);
-	mlx_hook(game.gfx.win, 17, 0, close_window_handler, &game);
-	mlx_loop_hook(game.gfx.mlx, render_next_frame, &game);
-	// init_hooks(*game);
+	init_hooks(&game);
 	mlx_loop(game.gfx.mlx);
 	return (free_parse(&game.config), SUCCESS);
 }

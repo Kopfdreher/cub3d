@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:52:06 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 13:33:33 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/04 20:53:55 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 
 // Game Loop & Render
 int		render_next_frame(t_game *game);
-void	draw_floor_and_ceiling(t_game *game);
 void	cast_rays(t_game *game);
 
 // Input Handling
@@ -34,7 +33,6 @@ int		close_window_handler(t_game *game);
 
 // Movement
 void	move_player(t_game *game);
-void	rotate_camera(t_game *game, double rotation_speed);
 
 // CleanUp
 void	clean_up(t_game *game);
