@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:52:06 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 18:02:15 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/04 18:28:36 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int		close_window_handler(t_game *game);
 
 // Movement
 void	move_player(t_game *game);
-void	rotate_camera(t_game *game, double rotation_speed);
 
 // CleanUp
 void	clean_up(t_game *game);

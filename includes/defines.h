@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/03 15:27:41 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/04 17:51:46 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,19 @@
 
 // MACROS ----------------------------------------------------------------------
 
+// Returns
 # define SUCCESS 0
 # define FAILURE 1
 # define ERROR -1
 # define FALSE 0
 # define TRUE 1
 
-# define SCREEN_WIDTH 1024
-# define SCREEN_HEIGHT 768
+// Imgs
+# define SCREEN_WIDTH 1280
+# define SCREEN_HEIGHT 720
 # define TEXTURE_SIZE 64
 
+// Keys
 # define K_W 119
 # define K_A 97
 # define K_S 115
@@ -35,6 +38,10 @@
 # define K_LEFT 65361
 # define K_RIGHT 65363
 # define K_ESC 65307
+
+// Movement
+# define MOVEMENT_SPEED 0.1
+# define ROTATE_SPEED 0.1
 
 // ENUMS -----------------------------------------------------------------------
 
