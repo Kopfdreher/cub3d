@@ -6,21 +6,22 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 17:21:25 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/03 18:39:25 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 12:58:36 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int check_texture_path(char *path)
+static	int	check_texture_path(char *path)
 {
-	int fd;
+	int	fd;
+
 	if (!path || !*path)
 		return (printf("Error: Texture path is empty\n"), FAILURE);
-	//try to open
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (printf("Error: unable to open texture file %s\n", path), FAILURE);
+		return (printf("Error: unable to open texture file %s\n", path),
+			FAILURE);
 	close(fd);
 	if (valid_xpm_extension(path) == FAILURE)
 		return (FAILURE);
@@ -41,8 +42,9 @@ static int	load_texture(t_game *game, t_direction dir, char *path,
 	if (!game->gfx.textures[dir].img)
 		return (printf("Error: Could not load %s texture from path: %s\n",
 				dir_name, path), FAILURE);
-	if(game->gfx.textures[dir].width != TEXTURE_SIZE || game->gfx.textures[dir].height != TEXTURE_SIZE)
-		return (printf("Error: Texture %s has invalid dimensions, expected %dx%d\n",
+	if (game->gfx.textures[dir].width != TEXTURE_SIZE
+		|| game->gfx.textures[dir].height != TEXTURE_SIZE)
+		return (printf("Error: Texture %s dimensions invalid, expected %dx%d\n",
 				path, TEXTURE_SIZE, TEXTURE_SIZE), FAILURE);
 	return (SUCCESS);
 }

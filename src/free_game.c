@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:16:57 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/03 15:16:58 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 13:00:05 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	free_parse(t_config *config)
 	return (SUCCESS);
 }
 
-void destroy_loaded_images(t_game *game)
+void	destroy_loaded_images(t_game *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!game)

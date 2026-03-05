@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:17:25 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/03 17:09:53 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 12:53:59 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	free_cf_strarr(char **floor_colors, char **ceiling_colors,
 	free_strarr(&floor_colors);
 }
 
-//this checks that the color string contains at least one digit, and that all non-space characters are digits
+//this checks that the color string contains at least one digit, 
+//and that all non-space characters are digits
 int	ft_isdigit_in_str(char *str)
 {
 	int	j;
@@ -36,7 +37,8 @@ int	ft_isdigit_in_str(char *str)
 	return (FAILURE);
 }
 
-//this checks that all non-space characters in the color string are digits, this is to catch cases like "F: 255, 255, 255f"
+//this checks that all non-space characters in the color string are digits, 
+//this is to catch cases like "F: 255, 255, 255f"
 int	ft_is_only_digit_str(char *str)
 {
 	int	j;
@@ -59,7 +61,8 @@ int	ft_is_only_digit_str(char *str)
 }
 
 //check that each color string contains at least one digit
-//this is to catch cases like "F: 255, , 255" where the middle color is missing but we still have 3 color strings
+//this is to catch cases like "F: 255, , 255" where the middle color 
+//is missing but we still have 3 color strings
 int	color_count_check(char **floor_colors, char **ceiling_colors)
 {
 	int		i;
@@ -77,7 +80,7 @@ int	color_count_check(char **floor_colors, char **ceiling_colors)
 	while (ceiling_colors[j])
 	{
 		if ((ft_isdigit_in_str(ceiling_colors[j]) == FAILURE) 
-		|| (ft_is_only_digit_str(ceiling_colors[j]) == FAILURE))
+			|| (ft_is_only_digit_str(ceiling_colors[j]) == FAILURE))
 			return (FAILURE);
 		j++;
 	}
@@ -110,7 +113,7 @@ int	convert_colors(t_config *config, char **floor_colors,
 	return (free_cf_strarr(floor_colors, ceiling_colors, NULL), SUCCESS);
 }
 
-int count_commas(char *str)
+int	count_commas(char *str)
 {
 	int	i;
 	int	count;
@@ -131,8 +134,12 @@ int	convert_color_str_to_int(t_config *config)
 	char	**floor_colors;
 	char	**ceiling_colors;
 
-	if (count_commas(config->floor_str) != 2 || count_commas(config->ceiling_str) != 2)
-		return (printf("Error: Invalid color format, must contain exactly 2 commas\n"), FAILURE);	
+	if (count_commas(config->floor_str) != 2 
+		|| count_commas(config->ceiling_str) != 2)
+	{
+		printf("Error: Invalid color format, must contain exactly 2 commas\n");
+		return (FAILURE);
+	}
 	floor_colors = ft_split(config->floor_str, ',');
 	ceiling_colors = ft_split(config->ceiling_str, ',');
 	if (!floor_colors || !ceiling_colors)

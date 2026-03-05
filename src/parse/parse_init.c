@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:29:53 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/04 21:24:22 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/05 12:58:17 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ static int	check_surrounding_spaces(t_config *config, int i, int j)
 	return (SUCCESS);
 }
 
-static char *trim_path_ws(char *original, int start_idx, char *label)
+static char	*trim_path_ws(char *original, int start_idx, char *label)
 {
 	char	*trimmed;
+
 	trimmed = ft_strtrim(original + start_idx, " \t\n\r\v\f");
 	if (!trimmed)
 	{
@@ -50,7 +51,7 @@ static char *trim_path_ws(char *original, int start_idx, char *label)
 		free(trimmed);
 		return (NULL);
 	}
-	return(trimmed);
+	return (trimmed);
 }
 
 //copilot broke this out so that I dont have reapeat code
@@ -61,7 +62,6 @@ static int	set_config_path(char **target, char *line,
 	{
 		printf("Error: Duplicate %s texture path\n", label);
 		return (FAILURE);
-
 	}
 	*target = trim_path_ws(line, start_idx, label);
 	if (*target == NULL)
@@ -69,14 +69,13 @@ static int	set_config_path(char **target, char *line,
 	return (SUCCESS);
 }
 
-
-static int is_valid_map_char(char c)
+static int	is_valid_map_char(char c)
 {
 	return (c == '1' || c == '0' || c == ' ' || c == '\0' 
 		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-static int is_player_char(char c)
+static int	is_player_char(char c)
 {
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
@@ -102,7 +101,7 @@ static void	set_player_orientation(t_player *player)
 		set_orientation_values(player, -1, 0, 0, -0.90);
 }
 
-static int all_chars_valid(t_config *config, t_player *player, int i, int j)
+static int	all_chars_valid(t_config *config, t_player *player, int i, int j)
 {
 	i = 0;
 	while (i < config->map_height)
@@ -127,10 +126,10 @@ static int all_chars_valid(t_config *config, t_player *player, int i, int j)
 	}
 	if (player->player_char == '\0')
 		return (FAILURE);
-	return(SUCCESS);
+	return (SUCCESS);
 }
 
-static int check_boarders(t_config *config, int i, int j)
+static int	check_boarders(t_config *config, int i, int j)
 {
 	if ((i == 0 || i == config->map_height - 1)
 		&& config->map[i][j] != '1' && config->map[i][j] != ' ')
@@ -141,7 +140,7 @@ static int check_boarders(t_config *config, int i, int j)
 	return (SUCCESS);
 }
 
-static int check_boarder_and_zero(t_config *config, int i, int j)
+static int	check_boarder_and_zero(t_config *config, int i, int j)
 {
 	i = 0;
 	while (i < config->map_height)
@@ -166,6 +165,7 @@ static int check_boarder_and_zero(t_config *config, int i, int j)
 	}
 	return (SUCCESS);
 }
+
 // Ignore all leading whitespaces.
 // If the current row is the 0th row or the final row, 
 //	only accept '1's and ' 's.
@@ -184,61 +184,14 @@ static int check_boarder_and_zero(t_config *config, int i, int j)
 /* I keep the player char in place so that we can check it for validity 
 and then use it later when we initialize the player struct */
 /*	while (i < config->map_height) // then check to make sure the map is valid*/
-int valid_map(t_config *config, t_player *player)
+int	valid_map(t_config *config, t_player *player)
 {
 	if (config->map_height < 3 || config->map_width < 3)
 		return (FAILURE);
 	if (all_chars_valid(config, player, 0, 0) == FAILURE)
 		return (FAILURE);
-	return(check_boarder_and_zero(config, 0, 0));
+	return (check_boarder_and_zero(config, 0, 0));
 }
-
-
-// int valid_map(t_game *game)
-// {
-//     int i;
-//     int j;
-
-//     if (game->height < 3 || game->width < 3)
-//         return (FAILURE);
-//     i = 0;
-//     while (i < game->height)
-//     {
-//         j = 0;
-//         while (j < game->width)
-//         {
-//             while (game->map[i][j] == ' ')
-//                 j++;
-//             if (j >= game->width)
-//                 break ;
-//             if ((i == 0 || i == game->height - 1)
-//                 && game->map[i][j] != '1' && game->map[i][j] != ' ')
-//                 return (FAILURE);
-//             if ((j == 0 || j == game->width - 1) && game->map[i][j] != '1')
-//                 return (FAILURE);
-//             if (game->map[i][j] == ' ')
-//             {
-//                 if (game->map[i][j - 1] != '1' && game->map[i][j - 1] != ' ')
-//                     return (FAILURE);
-//                 if (game->map[i][j + 1] != '1' && game->map[i][j + 1] != ' ')
-//                     return (FAILURE);
-//                 if ((i > 0 && (game->map[i - 1][j] != '1' && game->map[i - 1][j] != ' '))
-//                     || (i < game->height - 1
-//                     && (game->map[i + 1][j] != '1' && game->map[i + 1][j] != ' ')))
-//                     return (FAILURE);
-//             }
-//             if (i > 0 && ft_strlen(game->map[i]) > ft_strlen(game->map[i - 1])
-//                 && j > (int)ft_strlen(game->map[i - 1]) && game->map[i][j] != '1')
-//                 return (FAILURE);
-//             if (i < game->height - 1 && ft_strlen(game->map[i]) > ft_strlen(game->map[i + 1])
-//                 && j > (int)ft_strlen(game->map[i + 1]) && game->map[i][j] != '1')
-//                 return (FAILURE);
-//             j++;
-//         }
-//         i++;
-//     }
-//     return (SUCCESS);
-// }
 
 //step 1
 //store the values so that we can use them later
@@ -276,7 +229,7 @@ static void	set_a_b_to_c(t_list **a, t_list **b, t_list **c)
 	*b = *c;
 }
 
-static int add_nodes_to_list(char *line, t_list **head, t_list **tail)
+static int	add_nodes_to_list(char *line, t_list **head, t_list **tail)
 {
 	t_list	*node;
 
@@ -295,7 +248,7 @@ static int add_nodes_to_list(char *line, t_list **head, t_list **tail)
 	return (SUCCESS);
 }
 
-static int init_map_list(t_list **head, t_list **tail,
+static int	init_map_list(t_list **head, t_list **tail,
 	char *first_line, t_config *config)
 {
 	t_list	*node;
@@ -332,7 +285,7 @@ char	**get_map_content(int map_fd, char *first_line, t_config *config)
 	return (ft_lst_to_strarr_width(&head, config->map_width));
 }
 
-static int init_cub_errors(t_config *config, int *fd)
+static int	init_cub_errors(t_config *config, int *fd)
 {
 	if (!config->file_path)
 	{
@@ -348,7 +301,7 @@ static int init_cub_errors(t_config *config, int *fd)
 	return (SUCCESS);
 }
 
-static int check_line_for_ws(char **line, int fd, int *i)
+static int	check_line_for_ws(char **line, int fd, int *i)
 {
 	*i = 0;
 	while ((*line)[*i] == ' ' || (*line)[*i] == '\t')
@@ -362,7 +315,7 @@ static int check_line_for_ws(char **line, int fd, int *i)
 	return (SUCCESS);
 }
 
-static int assign_map_content(t_config *config, int fd, char *line)
+static int	assign_map_content(t_config *config, int fd, char *line)
 {
 	config->map = get_map_content(fd, line, config);
 	if (!config->map)
@@ -384,7 +337,7 @@ int	open_cub(t_config *config)
 		if (check_line_for_ws(&line, fd, &i) == ERROR)
 			continue ;
 		if (line[i] == '1' || line[i] == '0')
-			return(assign_map_content(config, fd, line));
+			return (assign_map_content(config, fd, line));
 		if (parse_cub(line, config) == FAILURE)
 			return (free(line), close(fd), FAILURE);
 		free(line);
@@ -416,11 +369,10 @@ int	parse_cub_file(char *filepath, t_game *game)
 	return (SUCCESS);
 }
 
-int parse_init(char *filepath, t_game *game)
+int	parse_init(char *filepath, t_game *game)
 {
 	if (valid_cub_extension(filepath) == FAILURE)
 		return (FAILURE);
-	//should also check for valid texture extensions
 	if (parse_cub_file(filepath, game) == FAILURE)
 		return (FAILURE);
 	if (convert_color_str_to_int(&game->config) == FAILURE)

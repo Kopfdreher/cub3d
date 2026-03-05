@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 14:51:18 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/03 15:47:44 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 12:59:49 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	init_strarr(t_list **lst, int width, int *lst_size, char ***strarr)
 	*lst_size = ft_lstsize(*lst);
 	*strarr = malloc(sizeof(char *) * (*lst_size + 1));
 }
+
 /*Allocates and pads strings to width
 Stops at newline when encountered
 Frees list nodes and handles errors properly
