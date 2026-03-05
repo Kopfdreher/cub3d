@@ -6,12 +6,14 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 17:21:25 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/05 12:58:36 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 16:40:01 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*helper function to check if the texture path is valid, 
+can be opened and is actually an xpm file*/
 static	int	check_texture_path(char *path)
 {
 	int	fd;
@@ -28,17 +30,19 @@ static	int	check_texture_path(char *path)
 	return (SUCCESS);
 }
 
+/*helper function to load a texture
+checks if the texture path is valid, can be opened and is actually an xpm file
+if so load the texture using mlx_xpm_file_to_image
+check if actaully loaded texture 
+check dimensions */
 static int	load_texture(t_game *game, t_direction dir, char *path,
 	char *dir_name)
 {
-	//first make sure that the texture paths are valid and can be opened and is actually and xpm file
 	if (check_texture_path(path) == FAILURE)
 		return (FAILURE);
-	//if so then load
 	game->gfx.textures[dir].img = mlx_xpm_file_to_image(game->gfx.mlx,
 			path, &game->gfx.textures[dir].width,
 			&game->gfx.textures[dir].height);
-	//once we load we need to check if actaully loaded texture and if it has the right dimensions
 	if (!game->gfx.textures[dir].img)
 		return (printf("Error: Could not load %s texture from path: %s\n",
 				dir_name, path), FAILURE);

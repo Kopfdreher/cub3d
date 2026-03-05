@@ -6,12 +6,13 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:56:12 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/04 20:56:42 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/05 16:19:26 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*checks  parse_img for failure - if so destroy loaded images*/
 int	load_textures(t_game *game)
 {
 	if (parse_img(game) == FAILURE)

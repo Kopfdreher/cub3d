@@ -6,12 +6,13 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 17:12:11 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/03 17:20:24 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 16:20:19 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*this function checks if the file has a valid .cub extension*/
 int	valid_cub_extension(char *filepath)
 {
 	int	len;
@@ -23,6 +24,7 @@ int	valid_cub_extension(char *filepath)
 	return (SUCCESS);
 }
 
+/*this function checks if the file has a valid .xpm extension*/
 int	valid_xpm_extension(char *filepath)
 {
 	int	len;

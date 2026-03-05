@@ -6,12 +6,18 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 14:51:18 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/05 12:59:49 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 16:18:45 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*sets content in the list to local variable 
+then sets size for one string array
+malloc check occurs
+then copies content of one node to the string array and pads with spaces 
+	up to the specified width 
+null-terminates it*/
 char	**insert_content(t_list **lst, char **strarr, int width, int i)
 {
 	char	*content;
@@ -38,6 +44,8 @@ char	**insert_content(t_list **lst, char **strarr, int width, int i)
 	return (free (content), strarr);
 }
 
+/*allocates the string array based on the size of the list 
+and sets width to 0 if less than 0*/
 static void	init_strarr(t_list **lst, int width, int *lst_size, char ***strarr)
 {
 	if (width < 0)
@@ -46,10 +54,10 @@ static void	init_strarr(t_list **lst, int width, int *lst_size, char ***strarr)
 	*strarr = malloc(sizeof(char *) * (*lst_size + 1));
 }
 
-/*Allocates and pads strings to width
-Stops at newline when encountered
-Frees list nodes and handles errors properly
-Cleans up on failure cases*/
+/* initiates string array, clears on error
+iterates through the list, inserting content into the string array and frees node structs
+null-terminates the string array and returns it
+*/
 char	**ft_lst_to_strarr_width(t_list **lst, int width)
 {
 	//copilot filled this in but I fully understand it

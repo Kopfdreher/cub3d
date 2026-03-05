@@ -6,12 +6,13 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:16:57 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/05 13:00:05 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 16:06:58 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*this function frees all the memory allocated for the config structure */
 int	free_parse(t_config *config)
 {
 	if (config->no_texture_path)
@@ -37,6 +38,8 @@ int	free_parse(t_config *config)
 	return (SUCCESS);
 }
 
+/*this function destroys all the loaded images and 
+is called when closing window handler or when texture didnt load properly */
 void	destroy_loaded_images(t_game *game)
 {
 	int	i;
@@ -53,6 +56,7 @@ void	destroy_loaded_images(t_game *game)
 	}
 }
 
+/*this is called when freeing the game structure mlx init functions didnt work*/
 int	free_game(t_game *game)
 {
 	if (!game)

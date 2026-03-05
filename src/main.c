@@ -6,12 +6,13 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 16:08:56 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/05 13:33:34 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 16:19:57 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*this is just a debug function to print the parsed configuration*/
 static void	print_config_debug(t_game *game)
 {
 	int	i;

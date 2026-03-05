@@ -6,14 +6,17 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:29:53 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/05 12:58:17 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:37:31 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*check behind, in front, above, below, 
-top left corner, top right corner, bottom left corner, bottom right corner*/
+/*called from check_boarder_and_zero when we find a space character in the map, 
+we want to make sure that it is not adjacent to any non-space characters,
+check behind, in front, above, below, 
+top left corner, top right corner, bottom left corner, bottom right corner
+for a space character*/
 static int	check_surrounding_spaces(t_config *config, int i, int j)
 {
 	if (config->map[i][j - 1] == ' ')
@@ -35,6 +38,12 @@ static int	check_surrounding_spaces(t_config *config, int i, int j)
 	return (SUCCESS);
 }
 
+/*trim white spaces from the beginning and end of a string
+	using ft_strtrim
+ensure we could allocate memory for the trimmed string 
+ensure that the trimmed string is not empty
+if it is print an error message
+return the trimmed string or NULL on error*/
 static char	*trim_path_ws(char *original, int start_idx, char *label)
 {
 	char	*trimmed;
@@ -54,7 +63,12 @@ static char	*trim_path_ws(char *original, int start_idx, char *label)
 	return (trimmed);
 }
 
-//copilot broke this out so that I dont have reapeat code
+/* example of what it receives
+set_config_path(&config->no_texture_path, line, i + 2, "NO"));
+makes sure that we donta lready have something set for that path
+if we do we skip white spaces and check if the path is empty after trimming, 
+	if so we return failure 
+*/
 static int	set_config_path(char **target, char *line,
 	int start_idx, char *label)
 {
@@ -69,12 +83,14 @@ static int	set_config_path(char **target, char *line,
 	return (SUCCESS);
 }
 
+/*helper function to check if a character is valid in the map*/
 static int	is_valid_map_char(char c)
 {
 	return (c == '1' || c == '0' || c == ' ' || c == '\0' 
 		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
+/*helper function to check if a character is a player character*/
 static int	is_player_char(char c)
 {
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
@@ -89,6 +105,7 @@ static void	set_orientation_values(t_player *player,
 	player->plane_y = p_y;
 }
 
+/*sets the orientation values for the player based on their character*/
 static void	set_player_orientation(t_player *player)
 {
 	if (player->player_char == 'N')
@@ -101,6 +118,13 @@ static void	set_player_orientation(t_player *player)
 		set_orientation_values(player, -1, 0, 0, -0.90);
 }
 
+/*called from valid_map
+iterates through the map and checks if all characters are valid
+	ex if it is a char we expect 
+if we find a player char we check if we already have one, if so return failure
+if not we set the player char and position and orientation values
+check that we found a player char at the end and return failure if not
+*/
 static int	all_chars_valid(t_config *config, t_player *player, int i, int j)
 {
 	i = 0;
@@ -129,6 +153,10 @@ static int	all_chars_valid(t_config *config, t_player *player, int i, int j)
 	return (SUCCESS);
 }
 
+/*called from check_boarder_and_zero
+checks first and last rows for only 1s and spaces
+checks left and right columns for 1s and spaces
+if anything else found return failure*/
 static int	check_boarders(t_config *config, int i, int j)
 {
 	if ((i == 0 || i == config->map_height - 1)
@@ -139,7 +167,10 @@ static int	check_boarders(t_config *config, int i, int j)
 		return (FAILURE);
 	return (SUCCESS);
 }
-
+/*called from valid_map
+skips white spaces
+if we are have and empty line we break
+sends to check_boarders and check_surrounding_spaces to ensure valid map*/
 static int	check_boarder_and_zero(t_config *config, int i, int j)
 {
 	i = 0;
@@ -148,7 +179,7 @@ static int	check_boarder_and_zero(t_config *config, int i, int j)
 		j = 0;
 		while (j < config->map_width)
 		{
-			while (config->map[i][j] == ' ')
+			while (config->map[i][j] == ' ') //debating sending to ft_isspace
 				j++;
 			if (j >= config->map_width)
 				break ;
@@ -166,24 +197,9 @@ static int	check_boarder_and_zero(t_config *config, int i, int j)
 	return (SUCCESS);
 }
 
-// Ignore all leading whitespaces.
-// If the current row is the 0th row or the final row, 
-//	only accept '1's and ' 's.
-// else, The first and final character should always be a '1'.
-// In the case of any non leading whitespaces, the only acceptable characters 
-// 	adjacent to the space are '1's or ' 's.
-// if strlen(curr_row) > strlen(row_on_top) && current col > strlen(row_on_top)
-// 	current character should be '1'
-// If strlen(curr_row) > strlen(row_on_bottom) && 
-// 	current col > strlen(row_on_bottom), current character should be '1'
-// copilot was filling some of this in but I made sure to understand it and 
-// 	that it followed the map requirements, so I kept it. I also added some 
-//	additional checks to make sure we have a map to validate and that we skip 
-//		leading whitespace before checking the other conditions.0
-/*we first check to make sure all chars are valid and only 1 player char*/
-/* I keep the player char in place so that we can check it for validity 
-and then use it later when we initialize the player struct */
-/*	while (i < config->map_height) // then check to make sure the map is valid*/
+/*checks that the map is at least 3x3
+uses helper to check if map only contains valid characters
+uses helper to check boarders and zeros*/
 int	valid_map(t_config *config, t_player *player)
 {
 	if (config->map_height < 3 || config->map_width < 3)
@@ -193,10 +209,11 @@ int	valid_map(t_config *config, t_player *player)
 	return (check_boarder_and_zero(config, 0, 0));
 }
 
-//step 1
-//store the values so that we can use them later
-//step 2
-
+/*
+checks for valid cub lines 
+checks for white spaces 
+checks for identifiers NO, SO etc
+*/
 int	parse_cub(char *line, t_config *config)
 {
 	int	i;
@@ -223,12 +240,22 @@ int	parse_cub(char *line, t_config *config)
 	return (FAILURE);
 }
 
+/*sets head and tail to the same node for the first node in the list*/
 static void	set_a_b_to_c(t_list **a, t_list **b, t_list **c)
 {
 	*a = *c;
 	*b = *c;
 }
 
+/*called from get_map_content
+sets a new node with the line content and adds it to the end of the list
+does a malloc check and if it fails clears the list and frees the line content 
+	if we had already added a node to the list,
+	otherwise just returns failure since we 
+	didnt have anything to clear
+sends to set_a_b_to_c to set head and tail if this is the first node, 
+	otherwise just adds to the end and updates tail
+*/
 static int	add_nodes_to_list(char *line, t_list **head, t_list **tail)
 {
 	t_list	*node;
@@ -248,6 +275,8 @@ static int	add_nodes_to_list(char *line, t_list **head, t_list **tail)
 	return (SUCCESS);
 }
 
+/*helper function to initialize the map list
+also handles first line*/
 static int	init_map_list(t_list **head, t_list **tail,
 	char *first_line, t_config *config)
 {
@@ -263,6 +292,14 @@ static int	init_map_list(t_list **head, t_list **tail,
 	return (SUCCESS);
 }
 
+/*helper function to get the map content
+sends to a helper function that initiates the map list and handles the first line
+then reading line by line 
+updates map width if the lin is the longest we have encountered
+then sends to a helper to add nodes
+then sets height of map to the number of lines read (nodes)
+upon success returns the map content as a string array 
+	having sent it to ft_lst_to_strarr_width*/
 char	**get_map_content(int map_fd, char *first_line, t_config *config)
 {
 	t_list	*head;
@@ -285,6 +322,7 @@ char	**get_map_content(int map_fd, char *first_line, t_config *config)
 	return (ft_lst_to_strarr_width(&head, config->map_width));
 }
 
+/*checks that a file was provided and tries to open it*/
 static int	init_cub_errors(t_config *config, int *fd)
 {
 	if (!config->file_path)
@@ -301,20 +339,21 @@ static int	init_cub_errors(t_config *config, int *fd)
 	return (SUCCESS);
 }
 
-static int	check_line_for_ws(char **line, int fd, int *i)
+/*helper function to skip leading whitespace.
+returns ERROR if line is blank (only whitespace/newline), SUCCESS otherwise*/
+static int	check_line_for_ws(char **line, int *i)
 {
 	*i = 0;
 	while ((*line)[*i] == ' ' || (*line)[*i] == '\t')
 		(*i)++;
 	if ((*line)[*i] == '\n' || (*line)[*i] == '\0')
-	{
-		free(*line);
-		*line = get_next_line(fd);
 		return (ERROR);
-	}
 	return (SUCCESS);
 }
 
+/*receives the file descriptor and the first line of the map content
+then sends to a helper function which reads the rest of the map content
+closes fd on failure*/
 static int	assign_map_content(t_config *config, int fd, char *line)
 {
 	config->map = get_map_content(fd, line, config);
@@ -323,6 +362,21 @@ static int	assign_map_content(t_config *config, int fd, char *line)
 	return (close(fd), SUCCESS);
 }
 
+/*
+sends to helper function that checks that a file was provided 
+	and tries to open it
+then using get_next_line to read the file line by line
+skips blank lines and leading whitespace
+if we encounter a line that starts with 1 or 0 
+	we know we have reached the map content
+so we send the fd and the first line (since its already read)
+	to a helper function that reads the rest of the map content 
+	into a string array and assigns it to the config struct
+closes fd before returning failure 
+only successfully returns if we were able to read the map content 
+and assign it to the config struct
+	implicitly returned by way of assign_map_content returning success
+*/
 int	open_cub(t_config *config)
 {
 	int		fd;
@@ -334,8 +388,12 @@ int	open_cub(t_config *config)
 	line = get_next_line(fd);
 	while ((line != NULL))
 	{
-		if (check_line_for_ws(&line, fd, &i) == ERROR)
+		if (check_line_for_ws(&line, &i) == ERROR)
+		{
+			free(line);
+			line = get_next_line(fd);
 			continue ;
+		}
 		if (line[i] == '1' || line[i] == '0')
 			return (assign_map_content(config, fd, line));
 		if (parse_cub(line, config) == FAILURE)
@@ -346,7 +404,13 @@ int	open_cub(t_config *config)
 	return (close(fd), FAILURE);
 }
 
-/*after we check for files being there we check for validity of map*/
+/*assign file path to the config struct
+ sends to helper to check that a file was provided and can be opened
+ checks that all required texture paths and color strings were provided 
+	and that none are missing
+then checks that we have a map to validate
+and validates the map, checking for valid characters, valid boarders
+	also ensures that 0s and player are properly enclosed by walls*/
 int	parse_cub_file(char *filepath, t_game *game)
 {
 	int	i;
@@ -369,6 +433,10 @@ int	parse_cub_file(char *filepath, t_game *game)
 	return (SUCCESS);
 }
 
+/*starts the parsing process
+checks for cub extension
+then does an initial parse of the file
+finally converts color strings to integers*/
 int	parse_init(char *filepath, t_game *game)
 {
 	if (valid_cub_extension(filepath) == FAILURE)

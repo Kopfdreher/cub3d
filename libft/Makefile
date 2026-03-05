@@ -19,14 +19,14 @@ OBJS_STRARR = ${STRARR:.c=.o}
 
 CC = gcc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS ?= -Wall -Wextra -Werror
 
 GREEN = \033[0;32m
 BLUE  = \033[0;36m
 RESET = \033[0m
 
 .c.o:
-	${CC} ${CFLAGS} -g -c $< -o ${<:.c=.o}
+	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}: ${OBJS} ${OBJS_BONUS} ${OBJS_PRINTF} ${OBJS_GNL} ${OBJS_STRARR}
 	ar rcs ${NAME} ${OBJS} ${OBJS_BONUS} ${OBJS_PRINTF} ${OBJS_GNL} \

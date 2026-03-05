@@ -6,12 +6,13 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:17:25 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/05 13:29:56 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 16:41:32 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*helper function to free the color string arrays and print an error message*/
 void	free_cf_strarr(char **floor_colors, char **ceiling_colors,
 	char *error_msg)
 {
@@ -21,24 +22,12 @@ void	free_cf_strarr(char **floor_colors, char **ceiling_colors,
 	free_strarr(&floor_colors);
 }
 
-//this checks that the color string contains at least one digit, 
-//and that all non-space characters are digits
-int	ft_isdigit_in_str(char *str)
-{
-	int	j;
-
-	j = 0;
-	while (str[j])
-	{
-		if (ft_isdigit((int)str[j]))
-			return (SUCCESS);
-		j++;
-	}
-	return (FAILURE);
-}
-
-//this checks that all non-space characters in the color string are digits, 
-//this is to catch cases like "F: 255, 255, 255f"
+/*helper function to check if a string contains 
+only digits and white spaces
+checks end for white spaces
+if no digits found, return FAILURE 
+if havent reached end after possible white spaces, 
+definitive digits and possible trailing spaces, return FAILURE*/
 int	ft_is_only_digit_str(char *str)
 {
 	int	j;
@@ -60,10 +49,10 @@ int	ft_is_only_digit_str(char *str)
 	return (SUCCESS);
 }
 
-//check that each color string contains at least one digit
-//this is to catch cases like "F: 255, , 255" where the middle color 
-//is missing but we still have 3 color strings
-int	color_count_check(char **floor_colors, char **ceiling_colors)
+/*cheecks if the number of color values is correct
+sends to helper to look for only digits
+and ensures that exactly 3 color values are provided*/
+int	validate_color_components(char **floor_colors, char **ceiling_colors)
 {
 	int		i;
 	int		j;
@@ -71,16 +60,14 @@ int	color_count_check(char **floor_colors, char **ceiling_colors)
 	i = 0;
 	while (floor_colors[i])
 	{
-		if ((ft_isdigit_in_str(floor_colors[i]) == FAILURE)
-			|| ft_is_only_digit_str(floor_colors[i]) == FAILURE)
+		if (ft_is_only_digit_str(floor_colors[i]) == FAILURE)
 			return (FAILURE);
 		i++;
 	}
 	j = 0;
 	while (ceiling_colors[j])
 	{
-		if ((ft_isdigit_in_str(ceiling_colors[j]) == FAILURE) 
-			|| (ft_is_only_digit_str(ceiling_colors[j]) == FAILURE))
+		if (ft_is_only_digit_str(ceiling_colors[j]) == FAILURE)
 			return (FAILURE);
 		j++;
 	}
@@ -113,6 +100,12 @@ int	color_count_check(char **floor_colors, char **ceiling_colors)
 	return (free_cf_strarr(floor_colors, ceiling_colors, NULL), SUCCESS);
 }*/
 
+/*helper function to convert color strings to integers
+first uses ft_atoi to convert each color string to an integer
+then checks if the values are within the valid range 
+then assigns the values to the config structure UNION
+repeats for floor and ceiling colors
+frees the color string arrays before returning*/
 int	convert_colors(t_config *config, char **floor_colors, char **ceiling_colors)
 {
 	int	r;
@@ -128,18 +121,19 @@ int	convert_colors(t_config *config, char **floor_colors, char **ceiling_colors)
 	config->u_floor_color.rgb.r = (unsigned char)r;
 	config->u_floor_color.rgb.g = (unsigned char)g;
 	config->u_floor_color.rgb.b = (unsigned char)b;
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (free_cf_strarr(floor_colors, ceiling_colors,
-				"Error: Color values must be between 0 and 255\n"), FAILURE);
 	r = ft_atoi(ceiling_colors[0]);
 	g = ft_atoi(ceiling_colors[1]);
 	b = ft_atoi(ceiling_colors[2]);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		return (free_cf_strarr(floor_colors, ceiling_colors,
+				"Error: Color values must be between 0 and 255\n"), FAILURE);
 	config->u_ceiling_color.rgb.r = (unsigned char)r;
 	config->u_ceiling_color.rgb.g = (unsigned char)g;
 	config->u_ceiling_color.rgb.b = (unsigned char)b;
 	return (free_cf_strarr(floor_colors, ceiling_colors, NULL), SUCCESS);
 }
 
+/*counts commas in a string*/
 int	count_commas(char *str)
 {
 	int	i;
@@ -156,6 +150,12 @@ int	count_commas(char *str)
 	return (count);
 }
 
+/*ensures we have exactly 2 commas in each color string
+splits the color strings on commas
+completes malloc check
+then checks color components for validity (only digits, no extra characters, exactly 3 components)
+then converts the color strings to integers and assigns to config structure
+*/
 int	convert_color_str_to_int(t_config *config)
 {
 	char	**floor_colors;
@@ -167,15 +167,15 @@ int	convert_color_str_to_int(t_config *config)
 		printf("Error: Invalid color format, must contain exactly 2 commas\n");
 		return (FAILURE);
 	}
-	floor_colors = ft_split(config->floor_str, ','); //making an array of strings for each color value splitting on commas
+	floor_colors = ft_split(config->floor_str, ',');
 	ceiling_colors = ft_split(config->ceiling_str, ',');
 	if (!floor_colors || !ceiling_colors)
 		return (free_cf_strarr(floor_colors, ceiling_colors,
 				"Error: Could not allocate memory for color strings\n"),
 			FAILURE);
-	if (floor_colors && *floor_colors && ceiling_colors && *ceiling_colors) //then doing some checks to check color format
+	if (floor_colors && *floor_colors && ceiling_colors && *ceiling_colors)
 	{
-		if (color_count_check(floor_colors, ceiling_colors) == FAILURE)
+		if (validate_color_components(floor_colors, ceiling_colors) == FAILURE)
 			return (free_cf_strarr(floor_colors, ceiling_colors,
 					"Error: Invalid color format\n"), FAILURE);
 	}

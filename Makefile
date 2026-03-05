@@ -2,7 +2,9 @@
 
 NAME		= cub3d
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
+BASE_CFLAGS	= -Wall -Wextra -Werror
+DEBUG_FLAGS	= -g3 -fsanitize=address
+CFLAGS		= $(BASE_CFLAGS)
 
 # Colors
 GREEN		= \033[0;32m
@@ -63,7 +65,7 @@ $(NAME): $(OBJS) $(LIBFT) $(MLX_LIB)
 # Libft
 $(LIBFT):
 		@echo "$(BLUE)|--Building Libft-------------------|$(RESET)"
-		@make -C $(LIBFT_DIR) > /dev/null
+		@$(MAKE) -C $(LIBFT_DIR) CFLAGS="$(CFLAGS)" > /dev/null
 
 # MLX
 $(MLX_LIB):
@@ -98,4 +100,8 @@ fclean: clean
 # Rebuild
 re: fclean all
 
-.PHONY: clean all re fclean
+# Debug rebuild with sanitizer
+debug: CFLAGS = $(BASE_CFLAGS) $(DEBUG_FLAGS)
+debug: re
+
+.PHONY: clean all re fclean debug
