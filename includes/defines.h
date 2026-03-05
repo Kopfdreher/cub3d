@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/04 20:53:34 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/05 13:16:05 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ typedef struct s_keys {
 	int	right;
 }	t_keys;
 
+typedef struct s_color {
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+}	t_color;
+	
 typedef struct s_config {
 	char		*file_path;
 	char		**map;
@@ -95,8 +101,18 @@ typedef struct s_config {
 	char		*ceiling_str;
 	int			map_width;
 	int			map_height;
-	int			floor_color;
-	int			ceiling_color;
+	//int			floor_color;
+	//int			ceiling_color;
+	union
+	{
+		int		color;
+		t_color	rgb;
+	} u_floor_color;
+	union
+	{
+		int		color;
+		t_color	rgb;
+	} u_ceiling_color;
 }	t_config;
 
 typedef struct s_player {

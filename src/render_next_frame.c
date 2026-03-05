@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_next_frame.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:02:34 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/04 20:42:22 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/05 13:38:03 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static void	put_ceiling_floor(t_game *game)
 		{
 			if (y < SCREEN_HEIGHT / 2)
 				my_mlx_pixel_put(&game->gfx.buff,
-					x, y, game->config.ceiling_color);
+					x, y, game->config.u_ceiling_color.color);
 			else
 				my_mlx_pixel_put(&game->gfx.buff,
-					x, y, game->config.floor_color);
+					x, y, game->config.u_floor_color.color);
 		}
 	}
 }

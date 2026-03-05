@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:17:25 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/05 12:53:59 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 13:29:56 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	color_count_check(char **floor_colors, char **ceiling_colors)
 	return (SUCCESS);
 }
 
-int	convert_colors(t_config *config, char **floor_colors,
+/*int	convert_colors(t_config *config, char **floor_colors,
 	char **ceiling_colors)
 {
 	int	r;
@@ -110,6 +110,33 @@ int	convert_colors(t_config *config, char **floor_colors,
 		return (free_cf_strarr(floor_colors, ceiling_colors, 
 				"Error: Color values must be between 0 and 255\n"), FAILURE);
 	config->ceiling_color = (r << 16) | (g << 8) | b;
+	return (free_cf_strarr(floor_colors, ceiling_colors, NULL), SUCCESS);
+}*/
+
+int	convert_colors(t_config *config, char **floor_colors, char **ceiling_colors)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	r = ft_atoi(floor_colors[0]);
+	g = ft_atoi(floor_colors[1]);
+	b = ft_atoi(floor_colors[2]);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		return (free_cf_strarr(floor_colors, ceiling_colors,
+				"Error: Color values must be between 0 and 255\n"), FAILURE);
+	config->u_floor_color.rgb.r = (unsigned char)r;
+	config->u_floor_color.rgb.g = (unsigned char)g;
+	config->u_floor_color.rgb.b = (unsigned char)b;
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		return (free_cf_strarr(floor_colors, ceiling_colors,
+				"Error: Color values must be between 0 and 255\n"), FAILURE);
+	r = ft_atoi(ceiling_colors[0]);
+	g = ft_atoi(ceiling_colors[1]);
+	b = ft_atoi(ceiling_colors[2]);
+	config->u_ceiling_color.rgb.r = (unsigned char)r;
+	config->u_ceiling_color.rgb.g = (unsigned char)g;
+	config->u_ceiling_color.rgb.b = (unsigned char)b;
 	return (free_cf_strarr(floor_colors, ceiling_colors, NULL), SUCCESS);
 }
 
@@ -140,13 +167,13 @@ int	convert_color_str_to_int(t_config *config)
 		printf("Error: Invalid color format, must contain exactly 2 commas\n");
 		return (FAILURE);
 	}
-	floor_colors = ft_split(config->floor_str, ',');
+	floor_colors = ft_split(config->floor_str, ','); //making an array of strings for each color value splitting on commas
 	ceiling_colors = ft_split(config->ceiling_str, ',');
 	if (!floor_colors || !ceiling_colors)
 		return (free_cf_strarr(floor_colors, ceiling_colors,
 				"Error: Could not allocate memory for color strings\n"),
 			FAILURE);
-	if (floor_colors && *floor_colors && ceiling_colors && *ceiling_colors)
+	if (floor_colors && *floor_colors && ceiling_colors && *ceiling_colors) //then doing some checks to check color format
 	{
 		if (color_count_check(floor_colors, ceiling_colors) == FAILURE)
 			return (free_cf_strarr(floor_colors, ceiling_colors,
