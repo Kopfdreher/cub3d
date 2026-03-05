@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/05 13:16:05 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/05 13:46:01 by aabelkis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ typedef struct s_keys {
 }	t_keys;
 
 typedef struct s_color {
-	unsigned char	r;
-	unsigned char	g;
 	unsigned char	b;
+	unsigned char	g;
+	unsigned char	r;
 }	t_color;
 	
 typedef struct s_config {
