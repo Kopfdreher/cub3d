@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 17:21:25 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/05 16:40:01 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/06 12:55:05 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ checks if the texture path is valid, can be opened and is actually an xpm file
 if so load the texture using mlx_xpm_file_to_image
 check if actaully loaded texture 
 check dimensions */
-static int	load_texture(t_game *game, t_direction dir, char *path,
+static int	load_texture(t_game *game, t_dir dir, char *path,
 	char *dir_name)
 {
 	if (check_texture_path(path) == FAILURE)
@@ -50,6 +50,12 @@ static int	load_texture(t_game *game, t_direction dir, char *path,
 		|| game->gfx.textures[dir].height != TEXTURE_SIZE)
 		return (printf("Error: Texture %s dimensions invalid, expected %dx%d\n",
 				path, TEXTURE_SIZE, TEXTURE_SIZE), FAILURE);
+	game->gfx.textures[dir].addr = 
+		mlx_get_data_addr(game->gfx.textures[dir].img, 
+			&game->gfx.textures[dir].bpp, &game->gfx.textures[dir].line_len,
+			&game->gfx.textures[dir].endian);
+	if (!game->gfx.textures[dir].addr)
+		return (printf("Error: Texture address of %s invalid\n", path), FAILURE);
 	return (SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/05 13:46:01 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/06 13:09:35 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@
 # define K_ESC 65307
 
 // Movement
-# define MOVEMENT_SPEED 0.1
-# define ROTATE_SPEED 0.1
+# define MOVEMENT_SPEED 0.06
+# define ROTATE_SPEED 0.06
 
 // ENUMS -----------------------------------------------------------------------
 
-typedef enum e_direction {
+typedef enum e_dir {
 	NORTH,
 	SOUTH,
 	WEST,
 	EAST
-}	t_direction;
+}	t_dir;
 
 // STRUCTS ---------------------------------------------------------------------
 
@@ -73,6 +73,7 @@ typedef struct s_ray {
 	int		draw_start;
 	int		draw_end;
 	int		color;
+	t_dir	wall_dir;
 }	t_ray;
 
 typedef struct s_keys {
