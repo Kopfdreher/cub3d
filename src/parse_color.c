@@ -6,50 +6,13 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:17:25 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/05 16:41:32 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:44:26 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*helper function to free the color string arrays and print an error message*/
-void	free_cf_strarr(char **floor_colors, char **ceiling_colors,
-	char *error_msg)
-{
-	if (error_msg)
-		printf("%s", error_msg);
-	free_strarr(&ceiling_colors);
-	free_strarr(&floor_colors);
-}
-
-/*helper function to check if a string contains 
-only digits and white spaces
-checks end for white spaces
-if no digits found, return FAILURE 
-if havent reached end after possible white spaces, 
-definitive digits and possible trailing spaces, return FAILURE*/
-int	ft_is_only_digit_str(char *str)
-{
-	int	j;
-	int	digit_found;
-
-	j = 0;
-	digit_found = 0;
-	while (str[j] && ft_isspace(str[j]))
-		j++;
-	while (str[j] && ft_isdigit((int)str[j]))
-	{
-		digit_found = 1;
-		j++;
-	}
-	while (str[j] && ft_isspace(str[j]))
-		j++;
-	if (!digit_found || str[j] != '\0')
-		return (FAILURE);
-	return (SUCCESS);
-}
-
-/*cheecks if the number of color values is correct
+/*checks if the number of color values is correct
 sends to helper to look for only digits
 and ensures that exactly 3 color values are provided*/
 int	validate_color_components(char **floor_colors, char **ceiling_colors)
@@ -133,7 +96,7 @@ int	convert_colors(t_config *config, char **floor_colors, char **ceiling_colors)
 	return (free_cf_strarr(floor_colors, ceiling_colors, NULL), SUCCESS);
 }
 
-/*counts commas in a string*/
+// counts commas in a string
 int	count_commas(char *str)
 {
 	int	i;
@@ -150,11 +113,12 @@ int	count_commas(char *str)
 	return (count);
 }
 
-/*ensures we have exactly 2 commas in each color string
-splits the color strings on commas
-completes malloc check
-then checks color components for validity (only digits, no extra characters, exactly 3 components)
-then converts the color strings to integers and assigns to config structure
+/*
+ * ensures we have exactly 2 commas in each color string
+ * splits the color strings on commas completes malloc check
+ * then checks color components for validity (only digits, 
+ * no extra characters, exactly 3 components) then converts 
+ * the color strings to integers and assigns to config structure
 */
 int	convert_color_str_to_int(t_config *config)
 {

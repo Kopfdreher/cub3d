@@ -21,8 +21,9 @@ INC_FILES	= $(addsuffix .h, cub3d defines execute parse)
 INCS		= $(addprefix $(INC_DIR)/, $(INC_FILES))
 
 # Source files
-PARSE_FILES	= parse_init ft_lst_to_starr_width parse_color\
-			  parse_helper parse_check_file parse_img
+PARSE_FILES	= parse_init ft_lst_to_starr_width\
+			  parse_helper parse_check_file parse_img\
+			  parse_color parse_color_helper
 EXEC_FILES	= init_session render_next_frame key_handler\
 			  close_window_handler\
 			  cast_rays cast_rays_helper\

@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:59:04 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/07 11:53:39 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:42:04 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int		free_parse(t_config *config);
 
 //helpers
 int		ft_isspace(char c);
+
+//color_helpers
+void	free_cf_strarr(char **floor_colors, char **ceiling_colors, 
+			char *error_msg);
+int		ft_is_only_digit_str(char *str);
 
 // Validation
 int		valid_cub_extension(char *filepath);

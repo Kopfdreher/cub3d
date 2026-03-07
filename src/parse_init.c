@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:29:53 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/07 12:13:30 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:39:09 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ static int	is_player_char(char c)
 /*sets the orientation values for the player based on their character*/
 static void	set_player_orientation(t_player *player)
 {
-
 	if (player->player_char == 'N')
 	{
 		player->dir_y = -1.0;
@@ -171,10 +170,12 @@ static int	check_boarders(t_config *config, int i, int j)
 		return (FAILURE);
 	return (SUCCESS);
 }
-/*called from valid_map
-skips white spaces
-if we are have and empty line we break
-sends to check_boarders and check_surrounding_spaces to ensure valid map*/
+
+/*
+ * called from valid_map skips white spaces if we are have and empty line 
+ * we break sends to check_boarders and check_surrounding_spaces to ensure 
+ * valid map
+*/
 static int	check_boarder_and_zero(t_config *config, int i, int j)
 {
 	i = 0;
@@ -183,7 +184,7 @@ static int	check_boarder_and_zero(t_config *config, int i, int j)
 		j = 0;
 		while (j < config->map_width)
 		{
-			while (config->map[i][j] == ' ') //debating sending to ft_isspace
+			while (config->map[i][j] == ' ')
 				j++;
 			if (j >= config->map_width)
 				break ;
