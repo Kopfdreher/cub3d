@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:02:34 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/07 09:43:39 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:17:56 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static long long	get_time_in_ms(void)
 
 int	render_next_frame(t_game *game)
 {
-	long long curr_time;
+	long long	curr_time;
 
 	curr_time = get_time_in_ms();
 	if (curr_time - game->gfx.last_frame_time < 20)

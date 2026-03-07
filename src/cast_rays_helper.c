@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 18:05:22 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/06 19:41:08 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 10:53:42 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	execute_dda(t_game *game, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (ray->map_x < 0 || ray->map_x >= game->config.map_width ||
+		if (ray->map_x < 0 || ray->map_x >= game->config.map_width || 
 			ray->map_y < 0 || ray->map_y >= game->config.map_height)
 			ray->hit = 1;
 		else if (game->config.map[ray->map_y][ray->map_x] == '1')

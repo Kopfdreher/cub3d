@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:29:53 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/05 17:37:31 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:13:30 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,26 +96,30 @@ static int	is_player_char(char c)
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-static void	set_orientation_values(t_player *player, 
-	double d_x, double d_y, double p_x, double p_y)
-{
-	player->dir_x = d_x;
-	player->dir_y = d_y;
-	player->plane_x = p_x;
-	player->plane_y = p_y;
-}
-
 /*sets the orientation values for the player based on their character*/
 static void	set_player_orientation(t_player *player)
 {
+
 	if (player->player_char == 'N')
-		set_orientation_values(player, 0, -1, 0.90, 0);
-	if (player->player_char == 'S')
-		set_orientation_values(player, 0, 1, -0.90, 0);
-	if (player->player_char == 'E')
-		set_orientation_values(player, 1, 0, 0, 0.90);
-	if (player->player_char == 'W')
-		set_orientation_values(player, -1, 0, 0, -0.90);
+	{
+		player->dir_y = -1.0;
+		player->plane_x = 0.90;
+	}
+	else if (player->player_char == 'S')
+	{
+		player->dir_y = 1.0;
+		player->plane_x = -0.90;
+	}
+	else if (player->player_char == 'E')
+	{
+		player->dir_x = 1.0;
+		player->plane_y = 0.90;
+	}
+	else if (player->player_char == 'W')
+	{
+		player->dir_x = -1.0;
+		player->plane_y = -0.90;
+	}
 }
 
 /*called from valid_map

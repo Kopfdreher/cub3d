@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:52:06 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/06 18:03:53 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 11:49:41 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		close_window_handler(t_game *game);
 
 // Movement
 void	move_player(t_game *game);
+void	calc_movement(t_game *game);
 
 // CleanUp
 void	clean_up(t_game *game);
