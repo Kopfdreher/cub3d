@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:21:31 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/07 13:21:42 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 14:42:55 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ int	parse_cub(char *line, t_config *config)
 		return (set_config_path(&config->floor_str, line, i + 1, "F"));
 	else if (line[i] == 'C')
 		return (set_config_path(&config->ceiling_str, line, i + 1, "C"));
-	return (FAILURE);
+	return (printf("Error: Invalid line\n"), FAILURE);
 }

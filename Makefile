@@ -3,8 +3,7 @@
 NAME		= cub3d
 CC			= cc
 BASE_CFLAGS	= -Wall -Wextra -Werror
-DEBUG_FLAGS	= -g3 -fsanitize=address
-CFLAGS		= $(BASE_CFLAGS) $(DEBUG_FLAGS)
+CFLAGS		= $(BASE_CFLAGS)
 
 # Colors
 GREEN		= \033[0;32m

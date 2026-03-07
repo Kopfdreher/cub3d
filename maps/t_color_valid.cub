@@ -1,9 +1,9 @@
-NO ./minilibx-linux/test/open.xpm
-SO ./minilibx-linux/test/open.xpm
-WE ./minilibx-linux/test/open.xpm
-EA ./minilibx-linux/test/open.xpm
-F 120,80,30
-C 50,100,180
+NO ./textures/xpm/watertemple-north.xpm
+SO ./textures/xpm/watertemple-south.xpm
+WE ./textures/xpm/watertemple-west.xpm
+EA ./textures/xpm/watertemple-east.xpm
+F 83,139,118
+C 194,230,156
 11111
 10001
 10N01

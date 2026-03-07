@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 12:40:49 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/07 12:40:55 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:34:00 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,20 @@ definitive digits and possible trailing spaces, return FAILURE*/
 int	ft_is_only_digit_str(char *str)
 {
 	int	j;
-	int	digit_found;
+	int	digits_found;
 
 	j = 0;
-	digit_found = 0;
+	digits_found = 0;
 	while (str[j] && ft_isspace(str[j]))
 		j++;
 	while (str[j] && ft_isdigit((int)str[j]))
 	{
-		digit_found = 1;
+		digits_found++;
 		j++;
 	}
 	while (str[j] && ft_isspace(str[j]))
 		j++;
-	if (!digit_found || str[j] != '\0')
+	if (digits_found == 0 || digits_found > 3 || str[j] != '\0')
 		return (FAILURE);
 	return (SUCCESS);
 }

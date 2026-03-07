@@ -1,8 +1,8 @@
 NO ./textures/xpm/cyberpunk-north.xpm
 SO ./textures/xpm/cyberpunk-south.xpm
-WE ./textures/xpm/cyberpunk-west.xpm
 EA ./textures/xpm/cyberpunk-east.xpm
-F 85,24,96
+WE ./textures/xpm/cyberpunk-west.xpm
+F 85,			24,  96
 C 161,203,192
 
  1111111   11111   1111111

@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:17:25 by aabelkis          #+#    #+#             */
-/*   Updated: 2026/03/07 12:44:26 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:30:28 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,30 +38,6 @@ int	validate_color_components(char **floor_colors, char **ceiling_colors)
 		return (FAILURE);
 	return (SUCCESS);
 }
-
-/*int	convert_colors(t_config *config, char **floor_colors,
-	char **ceiling_colors)
-{
-	int	r;
-	int	g;
-	int	b;
-
-	r = ft_atoi(floor_colors[0]);
-	g = ft_atoi(floor_colors[1]);
-	b = ft_atoi(floor_colors[2]);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (free_cf_strarr(floor_colors, ceiling_colors,
-				"Error: Color values must be between 0 and 255\n"), FAILURE);
-	config->floor_color = (r << 16) | (g << 8) | b;
-	r = ft_atoi(ceiling_colors[0]);
-	g = ft_atoi(ceiling_colors[1]);
-	b = ft_atoi(ceiling_colors[2]);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (free_cf_strarr(floor_colors, ceiling_colors, 
-				"Error: Color values must be between 0 and 255\n"), FAILURE);
-	config->ceiling_color = (r << 16) | (g << 8) | b;
-	return (free_cf_strarr(floor_colors, ceiling_colors, NULL), SUCCESS);
-}*/
 
 /*helper function to convert color strings to integers
 first uses ft_atoi to convert each color string to an integer
