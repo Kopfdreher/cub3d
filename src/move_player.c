@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 17:48:23 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/07 10:01:30 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 10:37:04 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,50 +47,36 @@ static void	insert_valid_pos(double new_x, double new_y, t_game *game)
 		game->player.pos_y = new_y;
 }
 
-static void	move_forward_backward(t_game *game)
+static void	set_movement(double move[2], double x, double y)
 {
-	double	new_x;
-	double	new_y;
-
-	new_x = 0.0;
-	new_y = 0.0;
-	if (game->keys.w && !game->keys.s)
-	{
-		new_x = game->player.pos_x + game->player.dir_x * MOVEMENT_SPEED;
-		new_y = game->player.pos_y + game->player.dir_y * MOVEMENT_SPEED;
-	}
-	if (game->keys.s && !game->keys.w)
-	{
-		new_x = game->player.pos_x - game->player.dir_x * MOVEMENT_SPEED;
-		new_y = game->player.pos_y - game->player.dir_y * MOVEMENT_SPEED;
-	}
-	if (game->keys.w || game->keys.s)
-		insert_valid_pos(new_x, new_y, game);
+	move[X] += x;
+	move[Y] += y;
 }
 
-static void	move_left_right(t_game *game)
+static void	calc_movement(t_game *game)
 {
-	double	perp_x;
-	double	perp_y;
-	double	new_x;
-	double	new_y;
+	double	move[2];
+	double	perp[2];
 
-	perp_x = -game->player.dir_y;
-	perp_y = game->player.dir_x;
-	new_x = 0.0;
-	new_y = 0.0;
-	if (game->keys.a && !game->keys.d)
-	{
-		new_x = game->player.pos_x - perp_x * MOVEMENT_SPEED;
-		new_y = game->player.pos_y - perp_y * MOVEMENT_SPEED;
-	}
-	if (game->keys.d && !game->keys.a)
-	{
-		new_x = game->player.pos_x + perp_x * MOVEMENT_SPEED;
-		new_y = game->player.pos_y + perp_y * MOVEMENT_SPEED;
-	}
-	if (game->keys.a || game->keys.d)
-		insert_valid_pos(new_x, new_y, game);
+	move[X] = 0.0;
+	move[Y] = 0.0;
+	perp[X] = -game->player.dir_y;
+	perp[Y] = game->player.dir_x;
+	if (game->keys.w)
+		set_movement(move, game->player.dir_x * MOVEMENT_SPEED, 
+			game->player.dir_y * MOVEMENT_SPEED);
+	if (game->keys.s)
+		set_movement(move, game->player.dir_x * -MOVEMENT_SPEED, 
+			game->player.dir_y * -MOVEMENT_SPEED);
+	if (game->keys.a)
+		set_movement(move, perp[X] * -MOVEMENT_SPEED, 
+			perp[Y] * -MOVEMENT_SPEED);
+	if (game->keys.d)
+		set_movement(move, perp[X] * MOVEMENT_SPEED, 
+			perp[Y] * MOVEMENT_SPEED);
+	if (move[X] != 0.0 || move[Y] != 0.0)
+		insert_valid_pos(game->player.pos_x + move[X], 
+			game->player.pos_y + move[Y], game);
 }
 
 static void	rotate_camera(t_game *game)
@@ -119,7 +105,6 @@ static void	rotate_camera(t_game *game)
 
 void	move_player(t_game *game)
 {
-	move_forward_backward(game);
-	move_left_right(game);
+	calc_movement(game);
 	rotate_camera(game);
 }
