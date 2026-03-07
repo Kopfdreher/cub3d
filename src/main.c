@@ -6,13 +6,14 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 16:08:56 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/07 11:59:31 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:47:17 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*this is just a debug function to print the parsed configuration*/
+/*
+ * this is just a debug function to print the parsed configuration
 static void	print_config_debug(t_game *game)
 {
 	int	i;
@@ -39,6 +40,7 @@ static void	print_config_debug(t_game *game)
 		i++;
 	}
 }
+*/
 
 static void	init_hooks(t_game *game)
 {
@@ -57,7 +59,6 @@ int	main(int argc, char **argv)
 	ft_memset(&game, 0, sizeof(t_game));
 	if (parse_init(argv[1], &game) == FAILURE)
 		return (free_parse(&game.config), FAILURE);
-	print_config_debug(&game);
 	if (init_session(&game) == FAILURE)
 		return (free_parse(&game.config), FAILURE);
 	init_hooks(&game);
