@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/07 11:55:16 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:19:39 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ typedef struct s_config {
 	char		*ceiling_str;
 	int			map_width;
 	int			map_height;
-	//int			floor_color;
-	//int			ceiling_color;
 	union
 	{
 		int		color;
@@ -131,12 +129,12 @@ typedef struct s_player {
 }	t_player;
 
 typedef struct s_img {
-	void	*img;// this is what mlx_xpm_file_to_image returns //dont forget to mlx_destroy_image if get data doesnt work
-	char	*addr; //this is what mlx_get_data_addr returns
-	int		bpp; //send these nxt 3 to mlx_get_data_addr and it will fill them in for you
+	void	*img;
+	char	*addr;
+	int		bpp;
 	int		line_len;
 	int		endian;
-	int		width; //store width and height for convenience
+	int		width;
 	int		height;
 }	t_img;
 
