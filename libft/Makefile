@@ -17,7 +17,7 @@ OBJS_PRINTF = ${PRINTF:.c=.o}
 OBJS_GNL = ${GNL:.c=.o}
 OBJS_STRARR = ${STRARR:.c=.o}
 
-CC = gcc
+CC = cc
 RM = rm -f
 CFLAGS ?= -Wall -Wextra -Werror
 

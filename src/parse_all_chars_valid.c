@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:11:34 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/07 13:13:51 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 13:57:58 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,22 @@ static void	set_player_orientation(t_player *player)
 	if (player->player_char == 'N')
 	{
 		player->dir_y = -1.0;
-		player->plane_x = 0.90;
+		player->plane_x = PLANE;
 	}
 	else if (player->player_char == 'S')
 	{
 		player->dir_y = 1.0;
-		player->plane_x = -0.90;
+		player->plane_x = -PLANE;
 	}
 	else if (player->player_char == 'E')
 	{
 		player->dir_x = 1.0;
-		player->plane_y = 0.90;
+		player->plane_y = PLANE;
 	}
 	else if (player->player_char == 'W')
 	{
 		player->dir_x = -1.0;
-		player->plane_y = -0.90;
+		player->plane_y = -PLANE;
 	}
 }
 

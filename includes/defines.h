@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/07 12:19:39 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 14:21:58 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@
 # define FALSE 0
 # define TRUE 1
 
-// Imgs
+// GFX
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
 # define TEXTURE_SIZE 64
+# define PLANE 0.9
 
 // Keys
 # define K_W 119
