@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:27:15 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/06 13:09:35 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 09:46:15 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 # define K_ESC 65307
 
 // Movement
-# define MOVEMENT_SPEED 0.06
-# define ROTATE_SPEED 0.06
+# define MOVEMENT_SPEED 0.04
+# define ROTATE_SPEED 0.05
 
 // ENUMS -----------------------------------------------------------------------
 
@@ -138,10 +138,11 @@ typedef struct s_img {
 
 // t_img	textures[4];  NORTH, SOUTH, WEST, EAST
 typedef struct s_graphics {
-	void	*mlx;
-	void	*win;
-	t_img	buff;
-	t_img	textures[4];
+	void		*mlx;
+	void		*win;
+	t_img		buff;
+	t_img		textures[4];
+	long long	last_frame_time;
 }	t_graphics;
 
 typedef struct s_game {

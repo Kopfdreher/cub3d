@@ -6,7 +6,7 @@
 /*   By: aabelkis <aabelkis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:02:34 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/05 13:38:03 by aabelkis         ###   ########.fr       */
+/*   Updated: 2026/03/07 09:43:39 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,23 @@ static void	put_ceiling_floor(t_game *game)
 	}
 }
 
+static long long	get_time_in_ms(void)
+{
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL))
+		return (-1);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
 int	render_next_frame(t_game *game)
 {
+	long long curr_time;
+
+	curr_time = get_time_in_ms();
+	if (curr_time - game->gfx.last_frame_time < 20)
+		return (SUCCESS);
+	game->gfx.last_frame_time = curr_time;
 	move_player(game);
 	put_ceiling_floor(game);
 	cast_rays(game);

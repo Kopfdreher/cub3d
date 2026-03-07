@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 17:48:23 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/04 21:57:45 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 10:01:30 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,18 @@ static int	is_valid_pos(t_game *game, double x, double y)
 
 static void	insert_valid_pos(double new_x, double new_y, t_game *game)
 {
-	double	buffer;
+	double	buffer_x;
+	double	buffer_y;
 
-	buffer = 0.2;
+	buffer_x = 0.2;
 	if (new_x < game->player.pos_x)
-		buffer = -0.2;
-	if (is_valid_pos(game, new_x + buffer, game->player.pos_y))
-		game->player.pos_x = new_x;
-	buffer = 0.2;
+		buffer_x = -0.2;
+	buffer_y = 0.2;
 	if (new_y < game->player.pos_y)
-		buffer = -0.2;
-	if (is_valid_pos(game, game->player.pos_x, new_y + buffer))
+		buffer_y = -0.2;
+	if (is_valid_pos(game, new_x + buffer_x, game->player.pos_y))
+		game->player.pos_x = new_x;
+	if (is_valid_pos(game, game->player.pos_x, new_y + buffer_y))
 		game->player.pos_y = new_y;
 }
 

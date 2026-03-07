@@ -6,7 +6,7 @@
 /*   By: sgavrilo <sgavrilo@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 17:06:11 by sgavrilo          #+#    #+#             */
-/*   Updated: 2026/03/06 18:27:11 by sgavrilo         ###   ########.fr       */
+/*   Updated: 2026/03/07 09:18:26 by sgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static void	draw_texture_stripe(t_game *game, t_ray *ray, t_img *tex, int x)
 	int		y;
 
 	tex_x = (int)(get_wall_x(game, ray) * (double)TEXTURE_SIZE);
-	if ((ray->side == 0 && ray->dir_x > 0) || 
-		(ray->side == 1 && ray->dir_y < 0))
+	if ((ray->side == 0 && ray->dir_x < 0) || 
+		(ray->side == 1 && ray->dir_y > 0))
 		tex_x = TEXTURE_SIZE - tex_x - 1;
 	step = ((double)TEXTURE_SIZE) / ray->line_height;
 	tex_pos = (ray->draw_start - SCREEN_HEIGHT / 2 + 
